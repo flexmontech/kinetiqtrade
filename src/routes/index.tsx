@@ -1,24 +1,170 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
+import { LayoutGrid, Search, Star, Table2, Eye, Flame, ShieldCheck } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { AddLeadDialog } from "@/components/AddLeadDialog";
+import { LeadDetail } from "@/components/LeadDetail";
+import { CITIES, isHighTrust, opportunityScore, STAGES, TRADES, viewedRecently, type Lead } from "@/lib/leads";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
+const leadsQuery = queryOptions({
+  queryKey: ["leads"],
+  queryFn: async () => {
+    const { data, error } = await supabase.from("leads").select("*").order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return data;
+  },
+  refetchInterval: 15_000,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Pipeline — TradeLift" },
+      { name: "description", content: "Track Chicago-suburb trade leads from discovery to won, with demo sites and pitch scripts." },
+      { property: "og:title", content: "Pipeline — TradeLift" },
+      { property: "og:description", content: "Lead pipeline and demo site engine for home service trades." },
+    ],
+  }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(leadsQuery),
+  component: Dashboard,
+  errorComponent: ({ error }) => <div className="p-10">Couldn't load leads: {error.message}</div>,
+  notFoundComponent: () => <div className="p-10">Not found.</div>,
+});
+
+function Dashboard() {
+  const { data: leads } = useSuspenseQuery(leadsQuery);
+  const qc = useQueryClient();
+  const [view, setView] = useState<"board" | "table">("board");
+  const [q, setQ] = useState("");
+  const [trade, setTrade] = useState("all");
+  const [city, setCity] = useState("all");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [dragId, setDragId] = useState<string | null>(null);
+
+  const filtered = useMemo(() => leads.filter((l) =>
+    (trade === "all" || l.trade === trade) && (city === "all" || l.city === city) &&
+    (!q || `${l.business_name} ${l.owner_name ?? ""}`.toLowerCase().includes(q.toLowerCase()))), [leads, q, trade, city]);
+
+  const selected = leads.find((l) => l.id === selectedId) ?? null;
+  const hot = leads.filter((l) => viewedRecently(l.last_viewed_at)).length;
+
+  async function setStage(id: string, stage: string) {
+    qc.setQueryData(leadsQuery.queryKey, (old: Lead[] | undefined) => old?.map((l) => (l.id === id ? { ...l, stage } : l)));
+    await supabase.from("leads").update({ stage }).eq("id", id);
+    qc.invalidateQueries({ queryKey: leadsQuery.queryKey });
+  }
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen">
+      <header className="border-b bg-card">
+        <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-4 px-6 py-5">
+          <div>
+            <h1 className="font-display text-3xl font-extrabold tracking-tight">TradeLift<span className="text-accent">.</span></h1>
+            <p className="text-sm text-muted-foreground">{leads.length} leads · western suburbs · {hot > 0 && <span className="font-semibold text-hot">{hot} viewing now</span>}</p>
+          </div>
+          <AddLeadDialog onAdded={() => qc.invalidateQueries({ queryKey: leadsQuery.queryKey })} />
+        </div>
+        <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-3 px-6 pb-4">
+          <div className="relative w-full max-w-xs">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search business or owner" className="pl-8" />
+          </div>
+          <Select value={trade} onValueChange={setTrade}><SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+            <SelectContent><SelectItem value="all">All trades</SelectItem>{TRADES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
+          <Select value={city} onValueChange={setCity}><SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
+            <SelectContent><SelectItem value="all">All suburbs</SelectItem>{CITIES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
+          <div className="ml-auto flex rounded-md border p-0.5">
+            <Button size="sm" variant={view === "board" ? "default" : "ghost"} onClick={() => setView("board")}><LayoutGrid className="h-4 w-4" />Board</Button>
+            <Button size="sm" variant={view === "table" ? "default" : "ghost"} onClick={() => setView("table")}><Table2 className="h-4 w-4" />Table</Button>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-[1500px] px-6 py-6">
+        {view === "board" ? (
+          <div className="grid gap-4 overflow-x-auto md:grid-cols-5">
+            {STAGES.map((stage) => {
+              const col = filtered.filter((l) => l.stage === stage);
+              return (
+                <div key={stage} className="min-w-[240px] rounded-lg bg-secondary/60 p-3"
+                  onDragOver={(e) => e.preventDefault()} onDrop={() => dragId && setStage(dragId, stage)}>
+                  <div className="mb-3 flex items-center justify-between">
+                    <h2 className="font-display font-bold">{stage}</h2>
+                    <span className="rounded-full bg-card px-2 text-xs font-semibold">{col.length}</span>
+                  </div>
+                  <div className="space-y-2">
+                    {col.map((l) => <LeadCard key={l.id} lead={l} onOpen={() => setSelectedId(l.id)} onDrag={() => setDragId(l.id)} />)}
+                    {col.length === 0 && <p className="py-6 text-center text-xs text-muted-foreground">Drop leads here</p>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="rounded-lg border bg-card">
+            <Table>
+              <TableHeader><TableRow><TableHead>Business</TableHead><TableHead>Trade</TableHead><TableHead>Suburb</TableHead><TableHead>Rating</TableHead><TableHead>Score</TableHead><TableHead>Stage</TableHead><TableHead>Views</TableHead></TableRow></TableHeader>
+              <TableBody>
+                {[...filtered].sort((a, b) => opportunityScore(b.rating, b.review_count) - opportunityScore(a.rating, a.review_count)).map((l) => (
+                  <TableRow key={l.id} className="cursor-pointer" onClick={() => setSelectedId(l.id)}>
+                    <TableCell className="font-semibold">{l.business_name} {viewedRecently(l.last_viewed_at) && <HotBadge />}</TableCell>
+                    <TableCell><Badge variant="secondary">{l.trade}</Badge></TableCell>
+                    <TableCell>{l.city}</TableCell>
+                    <TableCell>{l.rating}★ ({l.review_count})</TableCell>
+                    <TableCell><Score lead={l} /></TableCell>
+                    <TableCell>{l.stage}</TableCell>
+                    <TableCell>{l.view_count}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </main>
+
+      <LeadDetail lead={selected} onClose={() => setSelectedId(null)} onStage={setStage} />
     </div>
+  );
+}
+
+function HotBadge() {
+  return <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-hot px-2 py-0.5 text-[11px] font-bold text-hot-foreground"><Flame className="h-3 w-3" />Viewed just now</span>;
+}
+
+function Score({ lead }: { lead: Lead }) {
+  const s = opportunityScore(lead.rating, lead.review_count);
+  const trust = isHighTrust(lead.rating, lead.review_count);
+  return (
+    <span className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-bold ${trust ? "bg-trust text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+      {trust && <ShieldCheck className="h-3 w-3" />}{s}
+    </span>
+  );
+}
+
+function LeadCard({ lead, onOpen, onDrag }: { lead: Lead; onOpen: () => void; onDrag: () => void }) {
+  const hot = viewedRecently(lead.last_viewed_at);
+  return (
+    <button draggable onDragStart={onDrag} onClick={onOpen}
+      className={`w-full rounded-md border bg-card p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${hot ? "ring-2 ring-hot" : ""}`}>
+      {hot && <div className="mb-1.5"><HotBadge /></div>}
+      <div className="flex items-start justify-between gap-2">
+        <p className="font-semibold leading-tight">{lead.business_name}</p>
+        <Score lead={lead} />
+      </div>
+      <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+        <Badge variant="secondary" className="text-[11px]">{lead.trade}</Badge>
+        <span>{lead.city}</span>
+      </div>
+      <div className="mt-2 flex items-center justify-between text-xs">
+        <span className="flex items-center gap-1"><Star className="h-3.5 w-3.5 fill-accent text-accent" />{lead.rating} · {lead.review_count} reviews</span>
+        {lead.view_count > 0 && <span className="flex items-center gap-1 text-muted-foreground"><Eye className="h-3.5 w-3.5" />{lead.view_count}</span>}
+      </div>
+    </button>
   );
 }
