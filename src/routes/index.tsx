@@ -29,6 +29,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Track Chicago-suburb trade leads from discovery to won, with demo sites and pitch scripts." },
       { property: "og:title", content: "Pipeline — TradeLift" },
       { property: "og:description", content: "Lead pipeline and demo site engine for home service trades." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(leadsQuery),
