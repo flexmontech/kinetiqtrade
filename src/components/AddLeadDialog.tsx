@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
@@ -15,7 +15,7 @@ export function AddLeadDialog({ onAdded }: { onAdded: () => void }) {
   const [city, setCity] = useState<string>("Aurora");
   const [busy, setBusy] = useState(false);
 
-  async function submit(e: React.FormEvent<HTMLFormElement>) {
+  async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const business_name = String(f.get("business_name")).trim();
