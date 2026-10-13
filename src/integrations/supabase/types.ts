@@ -14,13 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      leads: {
+        Row: {
+          business_name: string
+          city: string
+          created_at: string
+          email: string | null
+          id: string
+          last_viewed_at: string | null
+          owner_name: string | null
+          phone: string | null
+          rating: number
+          review_count: number
+          reviews: Json
+          slug: string
+          stage: string
+          trade: string
+          view_count: number
+        }
+        Insert: {
+          business_name: string
+          city: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          last_viewed_at?: string | null
+          owner_name?: string | null
+          phone?: string | null
+          rating?: number
+          review_count?: number
+          reviews?: Json
+          slug: string
+          stage?: string
+          trade: string
+          view_count?: number
+        }
+        Update: {
+          business_name?: string
+          city?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          last_viewed_at?: string | null
+          owner_name?: string | null
+          phone?: string | null
+          rating?: number
+          review_count?: number
+          reviews?: Json
+          slug?: string
+          stage?: string
+          trade?: string
+          view_count?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      record_lead_view: { Args: { _slug: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
