@@ -59,10 +59,10 @@ export function LeadDetail({ lead, onClose, onStage }: { lead: Lead | null; onCl
               <Button size="sm" variant={device === "desktop" ? "default" : "ghost"} onClick={() => setDevice("desktop")}><Monitor className="h-4 w-4" />Desktop</Button>
             </div>
           </div>
-          <div className="flex justify-center rounded-lg bg-muted p-4">
+          <div className="flex min-w-0 justify-center rounded-lg bg-muted p-2 sm:p-4">
             {device === "mobile" ? (
-              <div className="rounded-[2.2rem] border-[10px] border-foreground bg-foreground shadow-xl">
-                <iframe title="Mobile preview" src={`/preview/${lead.slug}?track=0`} className="h-[640px] w-[360px] rounded-[1.5rem] bg-background" />
+              <div className="w-full max-w-[380px] overflow-hidden rounded-[2.2rem] border-[8px] border-foreground bg-foreground shadow-xl">
+                <iframe title="Mobile preview" src={`/preview/${lead.slug}?track=0`} className="h-[640px] w-full rounded-[1.5rem] bg-background" />
               </div>
             ) : (
               <div className="w-full overflow-hidden rounded-lg border bg-card shadow-xl">

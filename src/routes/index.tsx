@@ -29,11 +29,13 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Track Chicago-suburb trade leads from discovery to won, with demo sites and pitch scripts." },
       { property: "og:title", content: "Pipeline — TradeLift" },
       { property: "og:description", content: "Lead pipeline and demo site engine for home service trades." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(leadsQuery),
   component: Dashboard,
-  errorComponent: ({ error }) => <div className="p-10">Couldn't load leads: {error.message}</div>,
+  errorComponent: ({ error }) => <div className="p-10">Couldn't load leads: {error instanceof Error ? error.message : "Please try again."}</div>,
   notFoundComponent: () => <div className="p-10">Not found.</div>,
 });
 

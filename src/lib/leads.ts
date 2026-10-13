@@ -42,7 +42,7 @@ type TradeContent = {
   services: { title: string; desc: string }[];
 };
 
-export const TRADE_CONTENT: Record<string, TradeContent> = {
+export const TRADE_CONTENT = {
   HVAC: {
     headline: "Furnace out? We'll have you warm tonight.",
     emergency: "24/7 emergency heating & cooling repair",
@@ -103,10 +103,11 @@ export const TRADE_CONTENT: Record<string, TradeContent> = {
       { title: "Deck Staining", desc: "Protect and revive wood decks and fences." },
     ],
   },
-};
+} satisfies Record<string, TradeContent>;
 
 export function contentFor(trade: string): TradeContent {
-  return TRADE_CONTENT[trade] ?? TRADE_CONTENT.HVAC;
+  const content: Record<string, TradeContent> = TRADE_CONTENT;
+  return content[trade] ?? TRADE_CONTENT.HVAC;
 }
 
 export const NEARBY: Record<string, string[]> = {

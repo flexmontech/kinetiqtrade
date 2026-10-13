@@ -32,7 +32,10 @@ export function AddLeadDialog({ onAdded }: { onAdded: () => void }) {
       reviews: quote ? [{ author: "Google reviewer", text: quote, rating: 5 }] : [],
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success(`${business_name} added`);
     setOpen(false);
     onAdded();
