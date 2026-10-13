@@ -20,7 +20,7 @@ const ICONS: Record<string, typeof Wind> = {
 };
 
 export const Route = createFileRoute("/preview/$slug")({
-  validateSearch: (s: Record<string, unknown>) => ({ track: s.track === "0" || s.track === 0 ? 0 : 1 }),
+  validateSearch: (s: Record<string, unknown>) => ({ track: s["track"] === "0" || s["track"] === 0 ? 0 : 1 }),
   loader: async ({ params }) => {
     const { data, error } = await supabase.from("leads").select("*").eq("slug", params.slug).maybeSingle();
     if (error) throw new Error(error.message);
@@ -44,7 +44,7 @@ export const Route = createFileRoute("/preview/$slug")({
     };
   },
   component: PreviewPage,
-  errorComponent: ({ error }) => <div className="p-10 text-center">Couldn't load this demo: {error.message}</div>,
+  errorComponent: ({ error }) => <div className="p-10 text-center">Couldn't load this demo: {error instanceof Error ? error.message : "Please try again."}</div>,
   notFoundComponent: () => <div className="p-10 text-center font-display text-2xl">This demo site doesn't exist.</div>,
 });
 

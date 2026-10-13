@@ -35,7 +35,7 @@ export const Route = createFileRoute("/")({
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(leadsQuery),
   component: Dashboard,
-  errorComponent: ({ error }) => <div className="p-10">Couldn't load leads: {error.message}</div>,
+  errorComponent: ({ error }) => <div className="p-10">Couldn't load leads: {error instanceof Error ? error.message : "Please try again."}</div>,
   notFoundComponent: () => <div className="p-10">Not found.</div>,
 });
 
