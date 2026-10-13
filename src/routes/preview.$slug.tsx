@@ -58,7 +58,7 @@ function PreviewPage() {
 
   useEffect(() => {
     if (track === 0) return;
-    supabase.rpc("record_lead_view", { _slug: lead.slug });
+    void supabase.rpc("record_lead_view", { _slug: lead.slug }).then(() => {});
   }, [lead.slug, track]);
 
   return (
@@ -90,7 +90,7 @@ function PreviewPage() {
             </p>
             <h1 className="font-display text-4xl font-extrabold leading-tight text-brand-ink md:text-6xl">{c.headline}</h1>
             <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-              {lead.city}'s trusted {lead.trade.toLowerCase()} pros. Rated {lead.rating}★ by {lead.review_count} neighbors on Google.
+              {lead.city}'s trusted {lead.trade === "HVAC" ? "HVAC" : lead.trade.toLowerCase()} pros. Rated {lead.rating}★ by {lead.review_count} neighbors on Google.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <a href={tel} className="inline-flex items-center gap-2 rounded-md bg-brand px-6 py-3 text-lg font-semibold text-primary-foreground">
