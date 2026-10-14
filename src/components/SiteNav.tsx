@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router";
 
 const TABS = [
   { to: "/", label: "Home" },
-  { to: "/leads", label: "Leads" },
   { to: "/about", label: "About" },
+  { to: "/leads", label: "Leads" },
 ] as const;
 
 export function SiteNav() {
@@ -13,17 +13,17 @@ export function SiteNav() {
         <Link to="/" className="font-display text-xl font-extrabold tracking-tight">
           <span className="kinetiq-word">Kinetiq</span><span className="text-accent">.</span>
         </Link>
-        <div className="flex items-center gap-1 text-sm font-semibold">
+        <div className="flex items-center gap-2 text-sm font-semibold">
           {TABS.map((t) => (
             <Link key={t.to} to={t.to} activeOptions={{ exact: true }}
-              activeProps={{ className: "bg-primary text-primary-foreground" }}
-              inactiveProps={{ className: "text-muted-foreground hover:bg-muted hover:text-foreground" }}
-              className="rounded-md px-3 py-1.5 transition-colors">
+              activeProps={{ className: "ring-2 ring-crimson ring-offset-2 ring-offset-card" }}
+              className="rounded-md bg-crimson px-4 py-1.5 text-crimson-foreground shadow-md transition hover:brightness-110">
               {t.label}
             </Link>
           ))}
         </div>
-        <Link to="/join" className="ml-auto rounded-md bg-accent px-4 py-1.5 text-sm font-semibold text-accent-foreground transition-opacity hover:opacity-90">
+        <Link to="/join" activeProps={{ className: "ring-2 ring-crimson ring-offset-2 ring-offset-card" }}
+          className="ml-auto rounded-md bg-crimson px-4 py-1.5 text-sm font-semibold text-crimson-foreground shadow-md transition hover:brightness-110">
           Join
         </Link>
       </div>
