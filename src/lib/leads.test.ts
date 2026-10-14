@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isHighTrust, opportunityScore, pitches, viewedRecently, wordCount, type Lead } from "./leads";
+import { isHighTrust, opportunityScore, pitches, STAGES, viewedRecently, wordCount, type Lead } from "./leads";
 
 const lead = {
   business_name: "Fox Valley Comfort HVAC", owner_name: "Mike Kowalski", rating: 4.8,
@@ -19,6 +19,10 @@ describe("lead rules", () => {
     const now = Date.now();
     expect(viewedRecently(new Date(now - 5 * 60_000).toISOString(), now)).toBe(true);
     expect(viewedRecently(new Date(now - 20 * 60_000).toISOString(), now)).toBe(false);
+  });
+  it("pipeline has five stages and the second is Active Ready", () => {
+    expect(STAGES).toEqual(["Discovered", "Active Ready", "Pitched", "Viewed", "Won"]);
+    expect(STAGES).not.toContain("Demo Ready");
   });
   it("cold email body stays under 75 words", () => {
     const body = pitches(lead, "https://x.app/preview/fox").email.split("\n").slice(1).join(" ");

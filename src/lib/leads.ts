@@ -3,7 +3,7 @@ import type { Tables } from "@/integrations/supabase/types";
 export type Lead = Tables<"leads">;
 export type Review = { author: string; text: string; rating: number };
 
-export const STAGES = ["Discovered", "Demo Ready", "Pitched", "Viewed", "Won"] as const;
+export const STAGES = ["Discovered", "Active Ready", "Pitched", "Viewed", "Won"] as const;
 export type Stage = (typeof STAGES)[number];
 
 export const TRADES = ["HVAC", "Roofing", "Plumbing", "Tree Service", "Landscaping", "Painting"] as const;
