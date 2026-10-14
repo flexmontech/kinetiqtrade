@@ -25,9 +25,9 @@ const leadsQuery = queryOptions({
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pipeline — TradeLift" },
+      { title: "Pipeline — Kinetiq" },
       { name: "description", content: "Track Chicago-suburb trade leads from discovery to won, with demo sites and pitch scripts." },
-      { property: "og:title", content: "Pipeline — TradeLift" },
+      { property: "og:title", content: "Pipeline — Kinetiq" },
       { property: "og:description", content: "Lead pipeline and demo site engine for home service trades." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -63,11 +63,11 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b bg-card">
+    <div className="kinetiq-bg min-h-screen">
+      <header className="border-b bg-card/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-4 px-6 py-5">
           <div>
-            <h1 className="font-display text-3xl font-extrabold tracking-tight">TradeLift<span className="text-accent">.</span></h1>
+            <h1 className="font-display text-3xl font-extrabold tracking-tight"><span className="kinetiq-word">Kinetiq</span><span className="text-accent">.</span></h1>
             <p className="text-sm text-muted-foreground">{leads.length} leads · western suburbs · {hot > 0 && <span className="font-semibold text-hot">{hot} viewing now</span>}</p>
           </div>
           <AddLeadDialog onAdded={() => qc.invalidateQueries({ queryKey: leadsQuery.queryKey })} />
@@ -94,7 +94,7 @@ function Dashboard() {
             {STAGES.map((stage) => {
               const col = filtered.filter((l) => l.stage === stage);
               return (
-                <div key={stage} className="min-w-[240px] rounded-lg bg-secondary/60 p-3"
+                <div key={stage} className="min-w-[240px] rounded-xl border bg-card/55 p-3 backdrop-blur-md"
                   onDragOver={(e) => e.preventDefault()} onDrop={() => dragId && setStage(dragId, stage)}>
                   <div className="mb-3 flex items-center justify-between">
                     <h2 className="font-display font-bold">{stage}</h2>
