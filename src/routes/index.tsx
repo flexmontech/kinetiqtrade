@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AddLeadDialog } from "@/components/AddLeadDialog";
 import { LeadDetail } from "@/components/LeadDetail";
-import { CITIES, isHighTrust, opportunityScore, STAGES, TRADES, viewedRecently, type Lead } from "@/lib/leads";
+import { CITIES, isHighTrust, opportunityScore, slugify, STAGES, TRADES, viewedRecently, type Lead } from "@/lib/leads";
 
 const leadsQuery = queryOptions({
   queryKey: ["leads"],
@@ -48,6 +48,7 @@ function Dashboard() {
   const [city, setCity] = useState("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [dragId, setDragId] = useState<string | null>(null);
+  const [overStage, setOverStage] = useState<string | null>(null);
 
   const filtered = useMemo(() => leads.filter((l) =>
     (trade === "all" || l.trade === trade) && (city === "all" || l.city === city) &&
@@ -94,11 +95,14 @@ function Dashboard() {
             {STAGES.map((stage) => {
               const col = filtered.filter((l) => l.stage === stage);
               return (
-                <div key={stage} className="min-w-[240px] rounded-xl border bg-card/55 p-3 backdrop-blur-md"
-                  onDragOver={(e) => e.preventDefault()} onDrop={() => dragId && setStage(dragId, stage)}>
+                <div key={stage} data-stage={slugify(stage)}
+                  className={`stage-col min-w-[240px] rounded-xl border p-3 backdrop-blur-md transition-shadow ${overStage === stage ? "is-over" : ""}`}
+                  onDragOver={(e) => { e.preventDefault(); if (dragId) setOverStage(stage); }}
+                  onDragLeave={() => setOverStage((s) => (s === stage ? null : s))}
+                  onDrop={() => { setOverStage(null); if (dragId) setStage(dragId, stage); }}>
                   <div className="mb-3 flex items-center justify-between">
-                    <h2 className="font-display font-bold">{stage}</h2>
-                    <span className="rounded-full bg-card px-2 text-xs font-semibold">{col.length}</span>
+                    <h2 className="stage-title font-display font-bold">{stage}</h2>
+                    <span className="stage-count rounded-full px-2 py-0.5 text-xs font-semibold">{col.length}</span>
                   </div>
                   <div className="space-y-2">
                     {col.map((l) => <LeadCard key={l.id} lead={l} onOpen={() => setSelectedId(l.id)} onDrag={() => setDragId(l.id)} />)}
@@ -120,7 +124,7 @@ function Dashboard() {
                     <TableCell>{l.city}</TableCell>
                     <TableCell>{l.rating}★ ({l.review_count})</TableCell>
                     <TableCell><Score lead={l} /></TableCell>
-                    <TableCell>{l.stage}</TableCell>
+                    <TableCell><StageCell stage={l.stage} /></TableCell>
                     <TableCell>{l.view_count}</TableCell>
                   </TableRow>
                 ))}
@@ -145,6 +149,14 @@ function Score({ lead }: { lead: Lead }) {
   return (
     <span className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-bold ${trust ? "bg-trust text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
       {trust && <ShieldCheck className="h-3 w-3" />}{s}
+    </span>
+  );
+}
+
+function StageCell({ stage }: { stage: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      <span className="stage-dot" data-stage={slugify(stage)} />{stage}
     </span>
   );
 }

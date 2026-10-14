@@ -253,3 +253,47 @@
 @media (prefers-reduced-motion: reduce) {
   .kinetiq-bg::before { animation: none; }
 }
+
+/* Pipeline columns: every stage carries its own hue. */
+:root {
+  --stage: var(--muted-foreground);
+  --stage-discovered: oklch(0.55 0.18 265);
+  --stage-active-ready: oklch(0.56 0.14 185);
+  --stage-pitched: oklch(0.68 0.17 80);
+  --stage-viewed: oklch(0.62 0.2 25);
+  --stage-won: oklch(0.55 0.16 150);
+}
+[data-stage="discovered"] { --stage: var(--stage-discovered); }
+[data-stage="active-ready"] { --stage: var(--stage-active-ready); }
+[data-stage="pitched"] { --stage: var(--stage-pitched); }
+[data-stage="viewed"] { --stage: var(--stage-viewed); }
+[data-stage="won"] { --stage: var(--stage-won); }
+.stage-col {
+  position: relative;
+  background: color-mix(in oklab, var(--stage) 17%, var(--card));
+  border-color: color-mix(in oklab, var(--stage) 42%, var(--border));
+}
+.stage-col::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--stage), color-mix(in oklab, var(--stage) 45%, var(--card)));
+}
+.stage-col.is-over {
+  border-color: var(--stage);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--stage) 38%, transparent);
+}
+.stage-title { color: color-mix(in oklab, var(--stage) 78%, var(--foreground)); }
+.stage-count {
+  background: color-mix(in oklab, var(--stage) 22%, var(--card));
+  color: color-mix(in oklab, var(--stage) 82%, var(--foreground));
+}
+.stage-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: var(--stage);
+}
