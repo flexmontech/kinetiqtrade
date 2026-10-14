@@ -257,11 +257,11 @@
 /* Pipeline columns: every stage carries its own hue. */
 :root {
   --stage: var(--muted-foreground);
-  --stage-discovered: oklch(0.56 0.17 255);
-  --stage-active-ready: oklch(0.53 0.13 195);
-  --stage-pitched: oklch(0.66 0.17 55);
-  --stage-viewed: oklch(0.62 0.2 30);
-  --stage-won: oklch(0.55 0.15 150);
+  --stage-discovered: oklch(0.55 0.18 265);
+  --stage-active-ready: oklch(0.56 0.14 185);
+  --stage-pitched: oklch(0.68 0.17 80);
+  --stage-viewed: oklch(0.62 0.2 25);
+  --stage-won: oklch(0.55 0.16 150);
 }
 [data-stage="discovered"] { --stage: var(--stage-discovered); }
 [data-stage="active-ready"] { --stage: var(--stage-active-ready); }
@@ -270,8 +270,8 @@
 [data-stage="won"] { --stage: var(--stage-won); }
 .stage-col {
   position: relative;
-  background: color-mix(in oklab, var(--stage) 13%, var(--card));
-  border-color: color-mix(in oklab, var(--stage) 34%, var(--border));
+  background: color-mix(in oklab, var(--stage) 17%, var(--card));
+  border-color: color-mix(in oklab, var(--stage) 42%, var(--border));
 }
 .stage-col::before {
   content: "";
