@@ -214,3 +214,42 @@
   .demo-service, .demo-photo { transition: none; }
   .demo-service:hover, .demo-photo-wrap:hover .demo-photo { transform: none; }
 }
+
+/* Kinetiq dashboard: vivid animated gradient mesh behind the pipeline. */
+:root {
+  --kq-a: oklch(0.72 0.19 35);
+  --kq-b: oklch(0.68 0.17 250);
+  --kq-c: oklch(0.8 0.16 160);
+  --kq-d: oklch(0.75 0.2 330);
+}
+.kinetiq-bg {
+  position: relative;
+  isolation: isolate;
+  background: var(--background);
+}
+.kinetiq-bg::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  background:
+    radial-gradient(40% 35% at 15% 20%, color-mix(in oklab, var(--kq-a) 55%, transparent), transparent 70%),
+    radial-gradient(35% 40% at 85% 15%, color-mix(in oklab, var(--kq-b) 50%, transparent), transparent 70%),
+    radial-gradient(45% 40% at 70% 85%, color-mix(in oklab, var(--kq-c) 45%, transparent), transparent 70%),
+    radial-gradient(35% 35% at 20% 90%, color-mix(in oklab, var(--kq-d) 40%, transparent), transparent 70%);
+  filter: blur(40px) saturate(1.2);
+  animation: kq-drift 24s ease-in-out infinite alternate;
+}
+.kinetiq-word {
+  background: linear-gradient(100deg, var(--kq-a), var(--kq-d), var(--kq-b));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@keyframes kq-drift {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  100% { transform: translate(4%, -3%) rotate(8deg) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kinetiq-bg::before { animation: none; }
+}
