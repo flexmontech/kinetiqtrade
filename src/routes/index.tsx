@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AddLeadDialog } from "@/components/AddLeadDialog";
 import { LeadDetail } from "@/components/LeadDetail";
+import { SiteNav } from "@/components/SiteNav";
 import { CITIES, isHighTrust, opportunityScore, slugify, STAGES, TRADES, viewedRecently, type Lead } from "@/lib/leads";
 
 const leadsQuery = queryOptions({
@@ -65,6 +66,7 @@ function Dashboard() {
 
   return (
     <div className="kinetiq-bg min-h-screen">
+      <SiteNav />
       <header className="border-b bg-card/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-4 px-6 py-5">
           <div>
