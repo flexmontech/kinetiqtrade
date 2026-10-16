@@ -7,9 +7,9 @@ import { REGION_NAMES } from "@/lib/leads";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kinetiq — Websites, Leads & New Clients for Local Trades" },
-      { name: "description", content: "Kinetiq builds web apps for home service trades, finds high-trust local leads across Chicagoland, and turns them into clients." },
-      { property: "og:title", content: "Kinetiq — Websites, Leads & New Clients for Local Trades" },
+      { title: "Kinetiq — Websites, Leads & New Clients for Local Businesses" },
+      { name: "description", content: "Kinetiq builds web apps for home service businesses, finds high-trust local leads across Chicagoland, and turns them into clients." },
+      { property: "og:title", content: "Kinetiq — Websites, Leads & New Clients for Local Businesses" },
       { property: "og:description", content: "Web app creation, lead generation and sales pipelines for Chicagoland home service businesses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -34,11 +34,11 @@ function Landing() {
         <section className="py-20 text-center md:py-28">
           <p className="mx-auto inline-flex items-center gap-2 rounded-full bg-card/80 px-4 py-1.5 text-sm font-semibold backdrop-blur"><Zap className="h-4 w-4 text-crimson" />Now piloting across Chicagoland</p>
           <h1 className="mx-auto mt-6 max-w-4xl font-display text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl">
-            Great trades deserve <span className="kinetiq-word">great websites</span> — and more customers.
+            Great businesses deserve <span className="kinetiq-word">great websites</span> — and more customers.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">Kinetiq builds web apps for local home service businesses, finds the best-reviewed prospects, and turns them into paying clients.</p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
-            <Link to="/join" className="inline-flex items-center gap-2 rounded-full bg-crimson px-7 py-3.5 font-bold text-crimson-foreground shadow-lg transition hover:brightness-110">Join the pilot <ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/join" className="inline-flex items-center gap-2 rounded-full bg-crimson px-7 py-3.5 font-bold text-crimson-foreground shadow-lg transition hover:brightness-110">Join <ArrowRight className="h-4 w-4" /></Link>
             <Link to="/leads" className="inline-flex items-center gap-2 rounded-full border-2 border-crimson bg-card/80 px-7 py-3.5 font-bold backdrop-blur transition hover:bg-card">See live leads</Link>
           </div>
         </section>
