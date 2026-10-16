@@ -2,7 +2,8 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Phone, ShieldCheck, BadgeCheck, Star, Clock, MapPin, Wind, Home, Droplets, TreePine, Sprout, Paintbrush, ArrowRight, ArrowUpRight, Check, Quote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { contentFor, serviceAreas, tradeKey, type Review } from "@/lib/leads";
+import { contentFor, reviewReply, serviceAreas, tradeKey, type Review } from "@/lib/leads";
+import { DemoChat } from "@/components/DemoChat";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import homePhoto from "@/assets/demo-home.jpg";
@@ -179,6 +180,7 @@ function PreviewPage() {
                     <div className="flex items-center justify-between"><div className="flex text-demo-highlight">{Array.from({ length: r.rating }).map((_, j) => <Star key={j} className="h-4 w-4 fill-current" />)}</div><Quote className="h-6 w-6 text-demo-dark-foreground/30" /></div>
                     <blockquote className="mt-5 text-base leading-relaxed">“{r.text}”</blockquote>
                     <figcaption className="mt-6 flex items-center gap-3"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-demo-dark-foreground/10 text-sm font-bold">{r.author.slice(0, 1)}</span><span className="text-sm font-semibold">{r.author}<span className="block text-xs font-normal text-demo-dark-foreground/60">Google review</span></span></figcaption>
+                    <p className="mt-4 rounded-md border-l-2 border-demo-highlight bg-demo-dark-foreground/5 p-3 text-sm text-demo-dark-foreground/85"><span className="mb-1 block text-[11px] font-bold uppercase text-demo-highlight">AI reply from the owner</span>{reviewReply(r, lead)}</p>
                   </figure>
                 ))}
               </div>
@@ -216,6 +218,7 @@ function PreviewPage() {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-7 text-xs text-muted-foreground lg:px-8"><span className="font-display text-base font-bold text-brand-ink">{lead.business_name}</span><span>© {new Date().getFullYear()} · {lead.city}, IL · {lead.phone}</span></div>
       </footer>
       <Button variant="brand" asChild className="fixed inset-x-0 bottom-0 z-40 h-16 rounded-none text-base font-bold md:hidden"><a href={tel}><Phone /> Tap to call {lead.phone}</a></Button>
+      <DemoChat lead={lead} />
     </div>
   );
 }
