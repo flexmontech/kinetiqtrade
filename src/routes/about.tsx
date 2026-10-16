@@ -28,7 +28,7 @@ function About() {
       <SiteNav />
       <main className="mx-auto max-w-4xl px-6 py-14">
         <h1 className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">Websites that win local trust.</h1>
-        <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Great local businesses lose calls every day to weak websites. Kinetiq turns their Google reputation into a site that converts.</p>
+        <p className="mt-4 max-w-2xl text-lg text-muted-foreground">Great local businesses lose calls every day due to no web presence, no visibility and little or no product presence. Kinetiq turns their Google reputation into a site that converts.</p>
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
           {POINTS.map((p, i) => (
             <div key={p.t} className="rounded-xl border bg-card/80 p-5 backdrop-blur-md">
