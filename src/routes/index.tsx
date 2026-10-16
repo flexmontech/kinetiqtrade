@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, MonitorSmartphone, Radar, Handshake, Star, MapPinned, Zap } from "lucide-react";
+import { ArrowRight, MonitorSmartphone, Radar, Handshake, Star, MapPinned, Zap, MessageCircle, Reply, Bot } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
 import { REGION_NAMES } from "@/lib/leads";
@@ -25,6 +25,11 @@ const PILLARS = [
 ];
 
 const STEPS = ["Discover high-trust businesses", "Build their demo site instantly", "Pitch by email, text or call", "See the moment they open it", "Win the client"];
+
+const AI_TOOLS = [
+  { Icon: MessageCircle, title: "AI website chat", text: "Answers customer questions and captures job requests 24/7 — even at 2 a.m. when the furnace dies." },
+  { Icon: Reply, title: "AI review replies", text: "Writes warm, on-brand replies to every Google review so the business looks responsive and trusted." },
+];
 
 function Landing() {
   return (
@@ -66,6 +71,21 @@ function Landing() {
               <li key={s} className="rounded-xl border bg-card/85 p-5 backdrop-blur-md"><span className="font-display text-3xl font-extrabold text-crimson">{i + 1}</span><p className="mt-2 font-semibold">{s}</p></li>
             ))}
           </ol>
+        </section>
+
+        <section className="mb-16 rounded-3xl border bg-card/85 p-8 backdrop-blur-md md:p-12">
+          <p className="inline-flex items-center gap-2 rounded-full bg-accent/15 px-3 py-1 text-sm font-semibold text-accent"><Bot className="h-4 w-4" />AI tools for your clients</p>
+          <h2 className="mt-4 font-display text-4xl font-extrabold">Every site comes with AI that works while they sleep</h2>
+          <p className="mt-3 max-w-2xl text-muted-foreground">Try them live on any demo site — open the chat bubble or read the owner replies under each review.</p>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            {AI_TOOLS.map(({ Icon, title, text }) => (
+              <div key={title} className="rounded-2xl border bg-background p-6">
+                <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-accent-foreground"><Icon className="h-5 w-5" /></span>
+                <h3 className="mt-4 font-display text-xl font-bold">{title}</h3>
+                <p className="mt-2 text-muted-foreground">{text}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className="mb-4 rounded-3xl bg-crimson p-10 text-center text-crimson-foreground md:p-14">

@@ -207,3 +207,26 @@ export function auditFor(lead: Pick<Lead, "rating" | "review_count" | "email" | 
 export function auditScore(checks: AuditCheck[]) {
   return Math.round((checks.filter((c) => c.ok).length / checks.length) * 100);
 }
+
+/** Demo-only AI reply to a Google review (scripted until live AI is connected). */
+export function reviewReply(review: Review, lead: Pick<Lead, "business_name" | "city" | "owner_name">) {
+  const name = review.author.trim().split(/\s+/)[0] || "there";
+  const sign = lead.owner_name ? firstName(lead.owner_name) : "The team";
+  if (review.rating >= 4)
+    return `Thank you, ${name}! We're so glad we could help. Reviews like yours mean a lot to a local ${lead.city} business — we'll be here whenever you need us. — ${sign}, ${lead.business_name}`;
+  return `Hi ${name}, thank you for the honest feedback. We're sorry we fell short. Please call us so we can make it right. — ${sign}, ${lead.business_name}`;
+}
+
+export const CHAT_QUESTIONS = ["Do you offer free estimates?", "Can you come out today?", "What areas do you serve?"] as const;
+
+/** Demo-only website chat answers (scripted until live AI is connected). */
+export function chatAnswer(question: string, lead: Pick<Lead, "business_name" | "city" | "phone" | "trade">) {
+  const q = question.toLowerCase();
+  if (q.includes("estimate") || q.includes("price") || q.includes("cost"))
+    return `Yes! Estimates from ${lead.business_name} are always free. Share your name and number and we'll call you back today.`;
+  if (q.includes("today") || q.includes("emergency") || q.includes("now"))
+    return `We keep same-day slots for urgent jobs. For the fastest help, call ${lead.phone ?? "us"} — or leave your number here and we'll reach out.`;
+  if (q.includes("area") || q.includes("serve") || q.includes("where"))
+    return `We serve ${lead.city} and nearby suburbs: ${serviceAreas(lead.city).slice(1, 4).join(", ")}, and more.`;
+  return `Great question! A ${lead.trade.toLowerCase()} specialist will follow up shortly. Can I grab your phone number?`;
+}
