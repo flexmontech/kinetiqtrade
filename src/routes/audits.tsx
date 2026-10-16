@@ -86,7 +86,7 @@ function Audits() {
                   <p className="mt-1 text-muted-foreground">{gaps[0].angle}</p>
                 </div>
               )}
-              <Link to="/preview/$slug" params={{ slug: lead.slug }} search={{ track: "0" } as never} target="_blank"
+              <Link to="/preview/$slug" params={{ slug: lead.slug }} search={{ track: 0 }} target="_blank"
                 className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-crimson hover:underline">
                 Open demo site <ExternalLink className="h-3.5 w-3.5" />
               </Link>
