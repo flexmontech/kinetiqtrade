@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -16,7 +17,7 @@ export const Route = createFileRoute("/about")({
 });
 
 const POINTS = [
-  { t: "Find", d: "We spot highly rated HVAC, roofing, plumbing, tree and landscaping pros across Aurora, Joliet, Naperville, Bolingbrook and Wheaton." },
+  { t: "Find", d: "We spot highly rated HVAC, roofing, plumbing, tree and landscaping pros across West, Northwest, South, Southwest and East Chicagoland." },
   { t: "Build", d: "Each one gets a polished demo website using their real reviews, services and service area." },
   { t: "Launch", d: "Owners preview it on their phone, claim it, and go live on their own domain." },
 ];
@@ -38,6 +39,7 @@ function About() {
           ))}
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

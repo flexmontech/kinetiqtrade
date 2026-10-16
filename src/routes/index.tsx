@@ -6,12 +6,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AddLeadDialog } from "@/components/AddLeadDialog";
 import { LeadDetail } from "@/components/LeadDetail";
 import { SiteNav } from "@/components/SiteNav";
-import { CITIES, isHighTrust, opportunityScore, slugify, STAGES, TRADES, viewedRecently, type Lead } from "@/lib/leads";
+import { SiteFooter } from "@/components/SiteFooter";
+import { REGIONS, REGION_NAMES, matchesArea, isHighTrust, opportunityScore, slugify, STAGES, TRADES, viewedRecently, type Lead } from "@/lib/leads";
 
 const leadsQuery = queryOptions({
   queryKey: ["leads"],
@@ -52,7 +53,7 @@ function Dashboard() {
   const [overStage, setOverStage] = useState<string | null>(null);
 
   const filtered = useMemo(() => leads.filter((l) =>
-    (trade === "all" || l.trade === trade) && (city === "all" || l.city === city) &&
+    (trade === "all" || l.trade === trade) && matchesArea(l.city, city) &&
     (!q || `${l.business_name} ${l.owner_name ?? ""}`.toLowerCase().includes(q.toLowerCase()))), [leads, q, trade, city]);
 
   const selected = leads.find((l) => l.id === selectedId) ?? null;
@@ -82,8 +83,8 @@ function Dashboard() {
           </div>
           <Select value={trade} onValueChange={setTrade}><SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
             <SelectContent><SelectItem value="all">All trades</SelectItem>{TRADES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
-          <Select value={city} onValueChange={setCity}><SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
-            <SelectContent><SelectItem value="all">All suburbs</SelectItem>{CITIES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
+          <Select value={city} onValueChange={setCity}><SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
+            <SelectContent><SelectItem value="all">All areas</SelectItem>{REGION_NAMES.map((r) => (<SelectGroup key={r}><SelectLabel>{r}</SelectLabel><SelectItem value={`region:${r}`}>All {r}</SelectItem>{REGIONS[r].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectGroup>))}</SelectContent></Select>
           <div className="ml-auto flex rounded-md border p-0.5">
             <Button size="sm" variant={view === "board" ? "default" : "ghost"} onClick={() => setView("board")}><LayoutGrid className="h-4 w-4" />Board</Button>
             <Button size="sm" variant={view === "table" ? "default" : "ghost"} onClick={() => setView("table")}><Table2 className="h-4 w-4" />Table</Button>
@@ -137,6 +138,7 @@ function Dashboard() {
       </main>
 
       <LeadDetail lead={selected} onClose={() => setSelectedId(null)} onStage={setStage} />
+      <SiteFooter />
     </div>
   );
 }
