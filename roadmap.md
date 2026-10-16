@@ -1,4 +1,6 @@
-# Demo visual refresh
-- [x] Add vivid trade-relevant photography and polished demo layouts.
-- [x] Preserve existing demo content, calls, estimate behavior, and view tracking.
-- [x] Verify sample sites and dashboard previews at desktop and mobile sizes.
+# Kinetiq roadmap
+- [x] Demo visual refresh (photography, polished layouts, verified).
+- [x] Full footer (social icons, mission, sitemap, contact, disclaimers) on Home, About, Leads, Join.
+- [x] Expand suburbs to West, Northwest, South, Southwest, East regions; filter by region or suburb.
+- [x] Add Lead button available on the Leads tab too.
+- [ ] Real contact email/address/phone/social links for footer — waiting on user.

@@ -2,7 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Phone, ShieldCheck, BadgeCheck, Star, Clock, MapPin, Wind, Home, Droplets, TreePine, Sprout, Paintbrush, ArrowRight, ArrowUpRight, Check, Quote } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { contentFor, NEARBY, tradeKey, type Review } from "@/lib/leads";
+import { contentFor, serviceAreas, tradeKey, type Review } from "@/lib/leads";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import homePhoto from "@/assets/demo-home.jpg";
@@ -62,7 +62,7 @@ function PreviewPage() {
   const c = contentFor(lead.trade);
   const Icon = ICONS[lead.trade] ?? Wind;
   const reviews = (lead.reviews as unknown as Review[]) ?? [];
-  const areas = NEARBY[lead.city] ?? [lead.city];
+  const areas = serviceAreas(lead.city);
   const tel = `tel:${(lead.phone ?? "").replace(/[^0-9+]/g, "")}`;
   const [sent, setSent] = useState(false);
   const photo = PHOTOS[lead.trade] ?? homePhoto;
