@@ -189,3 +189,21 @@ CLOSE
 export function wordCount(s: string) {
   return s.trim().split(/\s+/).filter(Boolean).length;
 }
+
+export type AuditCheck = { label: string; ok: boolean; angle: string };
+
+/** Readiness checks built from data we already hold; live site checks arrive with the scanner. */
+export function auditFor(lead: Pick<Lead, "rating" | "review_count" | "email" | "phone" | "owner_name" | "view_count">): AuditCheck[] {
+  return [
+    { label: "Strong rating (4.5+)", ok: lead.rating >= 4.5, angle: "Lead with their reputation — it's their best sales asset." },
+    { label: "Review volume (15+)", ok: lead.review_count >= 15, angle: "Offer review-request automation to build proof faster." },
+    { label: "Email on file", ok: !!lead.email, angle: "Find a direct email before pitching; phone or SMS first." },
+    { label: "Phone on file", ok: !!lead.phone, angle: "Find a phone number for the call script." },
+    { label: "Owner name known", ok: !!lead.owner_name, angle: "Look up the owner so the pitch is personal." },
+    { label: "Opened their demo", ok: lead.view_count > 0, angle: "Not opened yet — resend the demo link by text." },
+  ];
+}
+
+export function auditScore(checks: AuditCheck[]) {
+  return Math.round((checks.filter((c) => c.ok).length / checks.length) * 100);
+}
