@@ -5,9 +5,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import { CITIES, slugify, TRADES } from "@/lib/leads";
+import { REGIONS, REGION_NAMES, slugify, TRADES } from "@/lib/leads";
 
 export function AddLeadDialog({ onAdded }: { onAdded: () => void }) {
   const [open, setOpen] = useState(false);
@@ -57,7 +57,7 @@ export function AddLeadDialog({ onAdded }: { onAdded: () => void }) {
               <Select value={trade} onValueChange={setTrade}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{TRADES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
             </div>
             <div className="grid gap-1.5"><Label>Suburb</Label>
-              <Select value={city} onValueChange={setCity}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{CITIES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
+              <Select value={city} onValueChange={setCity}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{REGION_NAMES.map((r) => (<SelectGroup key={r}><SelectLabel>{r}</SelectLabel>{REGIONS[r].map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectGroup>))}</SelectContent></Select>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">

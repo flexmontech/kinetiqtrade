@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { Star, ShieldCheck, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteNav } from "@/components/SiteNav";
+import { AddLeadDialog } from "@/components/AddLeadDialog";
+import { SiteFooter } from "@/components/SiteFooter";
 import { Badge } from "@/components/ui/badge";
 import { isHighTrust, opportunityScore } from "@/lib/leads";
 
@@ -33,13 +35,14 @@ export const Route = createFileRoute("/leads")({
 
 function Leads() {
   const { data } = useSuspenseQuery(leadsQuery);
+  const qc = useQueryClient();
   const leads = [...data].sort((a, b) => opportunityScore(b.rating, b.review_count) - opportunityScore(a.rating, a.review_count));
   return (
     <div className="kinetiq-bg min-h-screen">
       <SiteNav />
       <main className="mx-auto max-w-[1500px] px-6 py-8">
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Leads</h1>
-        <p className="text-sm text-muted-foreground">{leads.length} businesses, best opportunities first</p>
+        <div className="flex flex-wrap items-end justify-between gap-4"><div><h1 className="font-display text-3xl font-extrabold tracking-tight">Leads</h1>
+        <p className="text-sm text-muted-foreground">{leads.length} businesses, best opportunities first</p></div><AddLeadDialog onAdded={() => qc.invalidateQueries({ queryKey: ["leads"] })} /></div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {leads.map((l) => {
             const trust = isHighTrust(l.rating, l.review_count);
@@ -63,6 +66,7 @@ function Leads() {
           })}
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }

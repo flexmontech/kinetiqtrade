@@ -9,7 +9,35 @@ export type Stage = (typeof STAGES)[number];
 export const TRADES = ["HVAC", "Roofing", "Plumbing", "Tree Service", "Landscaping", "Painting"] as const;
 export type Trade = (typeof TRADES)[number];
 
-export const CITIES = ["Aurora", "Joliet", "Naperville", "Bolingbrook", "Wheaton"] as const;
+export const REGIONS = {
+  West: ["Aurora", "Naperville", "Wheaton", "West Chicago", "Elmhurst", "Oak Park", "Downers Grove"],
+  Northwest: ["Schaumburg", "Arlington Heights", "Elgin", "Palatine", "Des Plaines", "Hoffman Estates"],
+  South: ["Tinley Park", "Orland Park", "Oak Lawn", "Harvey", "Homewood", "Chicago Heights"],
+  Southwest: ["Joliet", "Bolingbrook", "Plainfield", "Romeoville", "Lockport", "Lemont"],
+  East: ["East Chicago", "Hammond", "Whiting", "Calumet City", "Lansing", "Gary"],
+} as const;
+export type Region = keyof typeof REGIONS;
+export const REGION_NAMES = Object.keys(REGIONS) as Region[];
+
+export const CITIES: string[] = Object.values(REGIONS).flat();
+
+export function regionOf(city: string): Region | null {
+  for (const r of REGION_NAMES) if ((REGIONS[r] as readonly string[]).includes(city)) return r;
+  return null;
+}
+
+/** Filter value is "all", "region:<Region>", or a city name. */
+export function matchesArea(city: string, filter: string) {
+  if (filter === "all") return true;
+  if (filter.startsWith("region:")) return regionOf(city) === filter.slice(7);
+  return city === filter;
+}
+
+export function serviceAreas(city: string): string[] {
+  if (NEARBY[city]) return NEARBY[city];
+  const r = regionOf(city);
+  return r ? [city, ...REGIONS[r].filter((c) => c !== city)] : [city];
+}
 
 export function isHighTrust(rating: number, reviews: number) {
   return rating >= 4.5 && reviews >= 15;
