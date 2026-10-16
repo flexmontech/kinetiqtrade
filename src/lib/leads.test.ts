@@ -29,3 +29,14 @@ describe("lead rules", () => {
     expect(wordCount(body)).toBeLessThan(75);
   });
 });
+
+import { matchesArea, regionOf } from "./leads";
+describe("area filter", () => {
+  it("groups suburbs into regions", () => {
+    expect(regionOf("Schaumburg")).toBe("Northwest");
+    expect(regionOf("Joliet")).toBe("Southwest");
+    expect(matchesArea("Tinley Park", "region:South")).toBe(true);
+    expect(matchesArea("Tinley Park", "region:West")).toBe(false);
+    expect(matchesArea("Aurora", "Aurora")).toBe(true);
+  });
+});
