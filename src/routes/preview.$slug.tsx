@@ -77,7 +77,7 @@ function PreviewPage() {
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-demo-dark px-4 py-2 text-center text-xs text-demo-dark-foreground">
         <span>Created by <strong>Kinetiq</strong></span>
         <Button variant="link" size="sm" asChild className="h-auto p-0 text-demo-highlight">
-          <a href="mailto:hello@kinetiq.app?subject=Claim my demo site">Claim your site <ArrowUpRight className="h-3 w-3" /></a>
+          <a href="mailto:info@kinetiq.tech?subject=Claim my demo site">Claim your site <ArrowUpRight className="h-3 w-3" /></a>
         </Button>
       </div>
 

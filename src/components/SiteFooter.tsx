@@ -1,12 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { REGION_NAMES } from "@/lib/leads";
 
 const SOCIAL = [
   { label: "Facebook", Icon: Facebook },
   { label: "Instagram", Icon: Instagram },
-  { label: "LinkedIn", Icon: Linkedin },
-  { label: "YouTube", Icon: Youtube },
 ];
 
 export function SiteFooter() {
@@ -43,9 +41,9 @@ export function SiteFooter() {
         <div>
           <h3 className="font-display font-bold text-crimson">Contact</h3>
           <ul className="mt-3 space-y-3 text-sm opacity-90">
-            <li className="flex gap-2"><MapPin className="h-4 w-4 shrink-0" />123 Main Street, Naperville, IL 60540</li>
+            <li className="flex gap-2"><MapPin className="h-4 w-4 shrink-0" />546 Main Street, Chicago, IL</li>
             <li className="flex gap-2"><Phone className="h-4 w-4 shrink-0" /><a href="tel:+16305550100" className="hover:underline">(630) 555-0100</a></li>
-            <li className="flex gap-2"><Mail className="h-4 w-4 shrink-0" /><a href="mailto:hello@kinetiq.app" className="hover:underline">hello@kinetiq.app</a></li>
+            <li className="flex gap-2"><Mail className="h-4 w-4 shrink-0" /><a href="mailto:info@kinetiq.tech" className="hover:underline">info@kinetiq.tech</a></li>
           </ul>
         </div>
       </div>

@@ -1,188 +1,80 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
-import { LayoutGrid, Search, Star, Table2, Eye, Flame, ShieldCheck } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { AddLeadDialog } from "@/components/AddLeadDialog";
-import { LeadDetail } from "@/components/LeadDetail";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, MonitorSmartphone, Radar, Handshake, Star, MapPinned, Zap } from "lucide-react";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
-import { REGIONS, REGION_NAMES, matchesArea, isHighTrust, opportunityScore, slugify, STAGES, TRADES, viewedRecently, type Lead } from "@/lib/leads";
-
-const leadsQuery = queryOptions({
-  queryKey: ["leads"],
-  queryFn: async () => {
-    const { data, error } = await supabase.from("leads").select("*").order("created_at", { ascending: false });
-    if (error) throw new Error(error.message);
-    return data;
-  },
-  refetchInterval: 15_000,
-});
+import { REGION_NAMES } from "@/lib/leads";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pipeline — Kinetiq" },
-      { name: "description", content: "Track Chicago-suburb trade leads from discovery to won, with demo sites and pitch scripts." },
-      { property: "og:title", content: "Pipeline — Kinetiq" },
-      { property: "og:description", content: "Lead pipeline and demo site engine for home service trades." },
+      { title: "Kinetiq — Websites, Leads & New Clients for Local Trades" },
+      { name: "description", content: "Kinetiq builds web apps for home service trades, finds high-trust local leads across Chicagoland, and turns them into clients." },
+      { property: "og:title", content: "Kinetiq — Websites, Leads & New Clients for Local Trades" },
+      { property: "og:description", content: "Web app creation, lead generation and sales pipelines for Chicagoland home service businesses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(leadsQuery),
-  component: Dashboard,
-  errorComponent: ({ error }) => <div className="p-10">Couldn't load leads: {error instanceof Error ? error.message : "Please try again."}</div>,
-  notFoundComponent: () => <div className="p-10">Not found.</div>,
+  component: Landing,
 });
 
-function Dashboard() {
-  const { data: leads } = useSuspenseQuery(leadsQuery);
-  const qc = useQueryClient();
-  const [view, setView] = useState<"board" | "table">("board");
-  const [q, setQ] = useState("");
-  const [trade, setTrade] = useState("all");
-  const [city, setCity] = useState("all");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [dragId, setDragId] = useState<string | null>(null);
-  const [overStage, setOverStage] = useState<string | null>(null);
+const PILLARS = [
+  { Icon: MonitorSmartphone, title: "Web app creation", text: "Fast, beautiful websites built for contractors — tap-to-call, estimate forms and real reviews front and center." },
+  { Icon: Radar, title: "Lead generation", text: "We scan every corner of Chicagoland for top-rated trades whose online presence doesn't match their reputation." },
+  { Icon: Handshake, title: "Sales & new clientele", text: "Each prospect gets a live demo of their own site before the first call, so the pitch sells itself." },
+];
 
-  const filtered = useMemo(() => leads.filter((l) =>
-    (trade === "all" || l.trade === trade) && matchesArea(l.city, city) &&
-    (!q || `${l.business_name} ${l.owner_name ?? ""}`.toLowerCase().includes(q.toLowerCase()))), [leads, q, trade, city]);
+const STEPS = ["Discover high-trust businesses", "Build their demo site instantly", "Pitch by email, text or call", "See the moment they open it", "Win the client"];
 
-  const selected = leads.find((l) => l.id === selectedId) ?? null;
-  const hot = leads.filter((l) => viewedRecently(l.last_viewed_at)).length;
-
-  async function setStage(id: string, stage: string) {
-    qc.setQueryData(leadsQuery.queryKey, (old: Lead[] | undefined) => old?.map((l) => (l.id === id ? { ...l, stage } : l)));
-    await supabase.from("leads").update({ stage }).eq("id", id);
-    qc.invalidateQueries({ queryKey: leadsQuery.queryKey });
-  }
-
+function Landing() {
   return (
     <div className="kinetiq-bg min-h-screen">
       <SiteNav />
-      <header className="border-b bg-card/70 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-4 px-6 py-5">
-          <div>
-            <h1 className="font-display text-3xl font-extrabold tracking-tight"><span className="kinetiq-word">Kinetiq</span><span className="text-accent">.</span></h1>
-            <p className="text-sm text-muted-foreground">{leads.length} leads · western suburbs · {hot > 0 && <span className="font-semibold text-hot">{hot} viewing now</span>}</p>
+      <main className="mx-auto max-w-[1200px] px-6">
+        <section className="py-20 text-center md:py-28">
+          <p className="mx-auto inline-flex items-center gap-2 rounded-full bg-card/80 px-4 py-1.5 text-sm font-semibold backdrop-blur"><Zap className="h-4 w-4 text-crimson" />Now piloting across Chicagoland</p>
+          <h1 className="mx-auto mt-6 max-w-4xl font-display text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl">
+            Great trades deserve <span className="kinetiq-word">great websites</span> — and more customers.
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">Kinetiq builds web apps for local home service businesses, finds the best-reviewed prospects, and turns them into paying clients.</p>
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            <Link to="/join" className="inline-flex items-center gap-2 rounded-full bg-crimson px-7 py-3.5 font-bold text-crimson-foreground shadow-lg transition hover:brightness-110">Join the pilot <ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/leads" className="inline-flex items-center gap-2 rounded-full border-2 border-crimson bg-card/80 px-7 py-3.5 font-bold backdrop-blur transition hover:bg-card">See live leads</Link>
           </div>
-          <AddLeadDialog onAdded={() => qc.invalidateQueries({ queryKey: leadsQuery.queryKey })} />
-        </div>
-        <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-3 px-6 pb-4">
-          <div className="relative w-full max-w-xs">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search business or owner" className="pl-8" />
-          </div>
-          <Select value={trade} onValueChange={setTrade}><SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
-            <SelectContent><SelectItem value="all">All trades</SelectItem>{TRADES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
-          <Select value={city} onValueChange={setCity}><SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
-            <SelectContent><SelectItem value="all">All areas</SelectItem>{REGION_NAMES.map((r) => (<SelectGroup key={r}><SelectLabel>{r}</SelectLabel><SelectItem value={`region:${r}`}>All {r}</SelectItem>{REGIONS[r].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectGroup>))}</SelectContent></Select>
-          <div className="ml-auto flex rounded-md border p-0.5">
-            <Button size="sm" variant={view === "board" ? "default" : "ghost"} onClick={() => setView("board")}><LayoutGrid className="h-4 w-4" />Board</Button>
-            <Button size="sm" variant={view === "table" ? "default" : "ghost"} onClick={() => setView("table")}><Table2 className="h-4 w-4" />Table</Button>
-          </div>
-        </div>
-      </header>
+        </section>
 
-      <main className="mx-auto max-w-[1500px] px-6 py-6">
-        {view === "board" ? (
-          <div className="grid gap-4 overflow-x-auto md:grid-cols-5">
-            {STAGES.map((stage) => {
-              const col = filtered.filter((l) => l.stage === stage);
-              return (
-                <div key={stage} data-stage={slugify(stage)}
-                  className={`stage-col min-w-[240px] rounded-xl border p-3 backdrop-blur-md transition-shadow ${overStage === stage ? "is-over" : ""}`}
-                  onDragOver={(e) => { e.preventDefault(); if (dragId) setOverStage(stage); }}
-                  onDragLeave={() => setOverStage((s) => (s === stage ? null : s))}
-                  onDrop={() => { setOverStage(null); if (dragId) setStage(dragId, stage); }}>
-                  <div className="mb-3 flex items-center justify-between">
-                    <h2 className="stage-title font-display font-bold">{stage}</h2>
-                    <span className="stage-count rounded-full px-2 py-0.5 text-xs font-semibold">{col.length}</span>
-                  </div>
-                  <div className="space-y-2">
-                    {col.map((l) => <LeadCard key={l.id} lead={l} onOpen={() => setSelectedId(l.id)} onDrag={() => setDragId(l.id)} />)}
-                    {col.length === 0 && <p className="py-6 text-center text-xs text-muted-foreground">Drop leads here</p>}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="rounded-lg border bg-card">
-            <Table>
-              <TableHeader><TableRow><TableHead>Business</TableHead><TableHead>Trade</TableHead><TableHead>Suburb</TableHead><TableHead>Rating</TableHead><TableHead>Score</TableHead><TableHead>Stage</TableHead><TableHead>Views</TableHead></TableRow></TableHeader>
-              <TableBody>
-                {[...filtered].sort((a, b) => opportunityScore(b.rating, b.review_count) - opportunityScore(a.rating, a.review_count)).map((l) => (
-                  <TableRow key={l.id} className="cursor-pointer" onClick={() => setSelectedId(l.id)}>
-                    <TableCell className="font-semibold">{l.business_name} {viewedRecently(l.last_viewed_at) && <HotBadge />}</TableCell>
-                    <TableCell><Badge variant="secondary">{l.trade}</Badge></TableCell>
-                    <TableCell>{l.city}</TableCell>
-                    <TableCell>{l.rating}★ ({l.review_count})</TableCell>
-                    <TableCell><Score lead={l} /></TableCell>
-                    <TableCell><StageCell stage={l.stage} /></TableCell>
-                    <TableCell>{l.view_count}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        )}
+        <section className="grid gap-5 md:grid-cols-3">
+          {PILLARS.map(({ Icon, title, text }) => (
+            <div key={title} className="rounded-2xl border bg-card/85 p-7 shadow-xl backdrop-blur-md transition hover:-translate-y-1">
+              <span className="grid h-12 w-12 place-items-center rounded-xl bg-crimson text-crimson-foreground"><Icon className="h-6 w-6" /></span>
+              <h2 className="mt-5 font-display text-2xl font-bold">{title}</h2>
+              <p className="mt-2 text-muted-foreground">{text}</p>
+            </div>
+          ))}
+        </section>
+
+        <section className="mt-16 grid gap-4 rounded-2xl bg-foreground p-8 text-background md:grid-cols-3">
+          <div><p className="flex items-center gap-2 font-display text-4xl font-extrabold"><Star className="h-7 w-7 fill-current text-crimson" />4.5+</p><p className="opacity-80">star businesses with 15+ reviews targeted first</p></div>
+          <div><p className="flex items-center gap-2 font-display text-4xl font-extrabold"><MapPinned className="h-7 w-7 text-crimson" />{REGION_NAMES.length}</p><p className="opacity-80">Chicagoland regions covered</p></div>
+          <div><p className="flex items-center gap-2 font-display text-4xl font-extrabold"><Zap className="h-7 w-7 text-crimson" />1 click</p><p className="opacity-80">from lead to live demo site</p></div>
+        </section>
+
+        <section className="py-16">
+          <h2 className="text-center font-display text-4xl font-extrabold">From prospect to client in five steps</h2>
+          <ol className="mt-8 grid gap-3 md:grid-cols-5">
+            {STEPS.map((s, i) => (
+              <li key={s} className="rounded-xl border bg-card/85 p-5 backdrop-blur-md"><span className="font-display text-3xl font-extrabold text-crimson">{i + 1}</span><p className="mt-2 font-semibold">{s}</p></li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="mb-4 rounded-3xl bg-crimson p-10 text-center text-crimson-foreground md:p-14">
+          <h2 className="font-display text-4xl font-extrabold">Ready to grow your client list?</h2>
+          <p className="mx-auto mt-3 max-w-xl opacity-90">Join the Kinetiq pilot and get your first demo-ready prospects this week.</p>
+          <Link to="/join" className="mt-7 inline-flex items-center gap-2 rounded-full bg-background px-7 py-3.5 font-bold text-foreground transition hover:brightness-95">Get started <ArrowRight className="h-4 w-4" /></Link>
+        </section>
       </main>
-
-      <LeadDetail lead={selected} onClose={() => setSelectedId(null)} onStage={setStage} />
       <SiteFooter />
     </div>
-  );
-}
-
-function HotBadge() {
-  return <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-hot px-2 py-0.5 text-[11px] font-bold text-hot-foreground"><Flame className="h-3 w-3" />Viewed just now</span>;
-}
-
-function Score({ lead }: { lead: Lead }) {
-  const s = opportunityScore(lead.rating, lead.review_count);
-  const trust = isHighTrust(lead.rating, lead.review_count);
-  return (
-    <span className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-bold ${trust ? "bg-trust text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
-      {trust && <ShieldCheck className="h-3 w-3" />}{s}
-    </span>
-  );
-}
-
-function StageCell({ stage }: { stage: string }) {
-  return (
-    <span className="inline-flex items-center gap-1.5">
-      <span className="stage-dot" data-stage={slugify(stage)} />{stage}
-    </span>
-  );
-}
-
-function LeadCard({ lead, onOpen, onDrag }: { lead: Lead; onOpen: () => void; onDrag: () => void }) {
-  const hot = viewedRecently(lead.last_viewed_at);
-  return (
-    <button draggable onDragStart={onDrag} onClick={onOpen}
-      className={`w-full rounded-md border bg-card p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${hot ? "ring-2 ring-hot" : ""}`}>
-      {hot && <div className="mb-1.5"><HotBadge /></div>}
-      <div className="flex items-start justify-between gap-2">
-        <p className="font-semibold leading-tight">{lead.business_name}</p>
-        <Score lead={lead} />
-      </div>
-      <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
-        <Badge variant="secondary" className="text-[11px]">{lead.trade}</Badge>
-        <span>{lead.city}</span>
-      </div>
-      <div className="mt-2 flex items-center justify-between text-xs">
-        <span className="flex items-center gap-1"><Star className="h-3.5 w-3.5 fill-accent text-accent" />{lead.rating} · {lead.review_count} reviews</span>
-        {lead.view_count > 0 && <span className="flex items-center gap-1 text-muted-foreground"><Eye className="h-3.5 w-3.5" />{lead.view_count}</span>}
-      </div>
-    </button>
   );
 }
