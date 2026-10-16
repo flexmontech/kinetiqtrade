@@ -17,9 +17,9 @@ export const Route = createFileRoute("/about")({
 });
 
 const POINTS = [
-  { t: "Find", d: "We spot highly rated HVAC, roofing, plumbing, tree and landscaping pros across West, Northwest, South, Southwest and East Chicagoland." },
-  { t: "Build", d: "Each one gets a polished demo website using their real reviews, services and service area." },
-  { t: "Launch", d: "Owners preview it on their phone, claim it, and go live on their own domain." },
+  { t: "Identify", d: "We identify premier, top-rated local service businesses across Greater Chicagoland whose customer trust outpaces their digital footprint." },
+  { t: "Architect", d: "Each business receives an interactive, high-converting web application showcasing their verified credentials, real customer reviews, and automated AI client capture." },
+  { t: "Deploy", d: "Business owners test-drive their live custom platform directly on mobile and deploy to production on their own domain." },
 ];
 
 function About() {
