@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
 
 const PILLARS = [
   { Icon: MonitorSmartphone, title: "Web app creation", text: "Fast, beautiful websites built for contractors — tap-to-call, estimate forms and real reviews front and center." },
-  { Icon: Radar, title: "Lead generation", text: "We scan every corner of Chicagoland for top-rated trades whose online presence doesn't match their reputation." },
+  { Icon: Radar, title: "Lead generation", text: "We scan every corner of Chicagoland for top-rated businesses whose online presence doesn't match their reputation." },
   { Icon: Handshake, title: "Sales & new clientele", text: "Each prospect gets a live demo of their own site before the first call, so the pitch sells itself." },
 ];
 
@@ -70,7 +70,7 @@ function Landing() {
 
         <section className="mb-4 rounded-3xl bg-crimson p-10 text-center text-crimson-foreground md:p-14">
           <h2 className="font-display text-4xl font-extrabold">Ready to grow your client list?</h2>
-          <p className="mx-auto mt-3 max-w-xl opacity-90">Join the Kinetiq pilot and get your first demo-ready prospects this week.</p>
+          <p className="mx-auto mt-3 max-w-xl opacity-90">Join Kinetiq and get your first demo-ready prospects this week.</p>
           <Link to="/join" className="mt-7 inline-flex items-center gap-2 rounded-full bg-background px-7 py-3.5 font-bold text-foreground transition hover:brightness-95">Get started <ArrowRight className="h-4 w-4" /></Link>
         </section>
       </main>

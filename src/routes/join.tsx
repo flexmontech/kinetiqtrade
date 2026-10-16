@@ -9,7 +9,7 @@ export const Route = createFileRoute("/join")({
   head: () => ({
     meta: [
       { title: "Join — Kinetiq" },
-      { name: "description", content: "Request access to the Kinetiq pilot for local trade demo websites." },
+      { name: "description", content: "Request access to the Kinetiq pilot for local business demo websites." },
       { property: "og:title", content: "Join — Kinetiq" },
       { property: "og:description", content: "Request access to the Kinetiq pilot." },
       { property: "og:type", content: "website" },

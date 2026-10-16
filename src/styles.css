@@ -217,54 +217,53 @@
   .demo-service:hover, .demo-photo-wrap:hover .demo-photo { transform: none; }
 }
 
-/* Kinetiq dashboard: vivid animated gradient mesh behind the pipeline. */
+/* Kinetiq workspace palette: navy, coral, cool grey, purple, white. */
 :root {
-  --kq-a: oklch(0.66 0.24 30);
-  --kq-b: oklch(0.58 0.22 260);
-  --kq-c: oklch(0.72 0.2 165);
-  --kq-d: oklch(0.65 0.26 340);
-  --crimson: oklch(0.5 0.21 22);
-  --crimson-foreground: oklch(0.99 0.005 20);
+  --kq-navy: oklch(0.255 0.045 263);
+  --kq-coral: oklch(0.67 0.18 25);
+  --kq-grey: oklch(0.97 0.005 260);
+  --kq-purple: oklch(0.55 0.19 292);
+  --background: var(--kq-grey);
+  --foreground: var(--kq-navy);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--kq-navy);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--kq-navy);
+  --primary: var(--kq-navy);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0.008 260);
+  --secondary-foreground: var(--kq-navy);
+  --muted: oklch(0.94 0.008 260);
+  --muted-foreground: oklch(0.48 0.03 262);
+  --accent: var(--kq-purple);
+  --accent-foreground: oklch(1 0 0);
+  --hot: var(--kq-coral);
+  --hot-foreground: oklch(1 0 0);
+  --trust: var(--kq-purple);
+  --border: oklch(0.9 0.01 260);
+  --input: oklch(0.88 0.012 260);
+  --ring: var(--kq-purple);
+  --crimson: var(--kq-coral);
+  --crimson-foreground: oklch(1 0 0);
+  --kq-gradient: linear-gradient(90deg, var(--kq-navy), var(--kq-purple), var(--kq-coral));
 }
-.kinetiq-bg {
-  position: relative;
-  isolation: isolate;
-  background: var(--background);
-}
-.kinetiq-bg::before {
-  content: "";
-  position: fixed;
-  inset: -20%;
-  z-index: -1;
-  background:
-    radial-gradient(45% 40% at 15% 20%, color-mix(in oklab, var(--kq-a) 90%, transparent), transparent 72%),
-    radial-gradient(40% 45% at 85% 15%, color-mix(in oklab, var(--kq-b) 88%, transparent), transparent 72%),
-    radial-gradient(50% 45% at 70% 85%, color-mix(in oklab, var(--kq-c) 82%, transparent), transparent 72%),
-    radial-gradient(40% 40% at 20% 90%, color-mix(in oklab, var(--kq-d) 80%, transparent), transparent 72%);
-  filter: blur(36px) saturate(1.5);
-  animation: kq-drift 24s ease-in-out infinite alternate;
-}
+.kinetiq-bg { background: var(--background); }
+.kinetiq-bg::before { content: ""; display: block; height: 3px; background: var(--kq-gradient); }
 .kinetiq-word {
-  background: linear-gradient(100deg, var(--kq-a), var(--kq-d), var(--kq-b));
+  background: var(--kq-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-@keyframes kq-drift {
-  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-  100% { transform: translate(4%, -3%) rotate(8deg) scale(1.08); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .kinetiq-bg::before { animation: none; }
-}
+footer .kinetiq-word { background: linear-gradient(90deg, oklch(1 0 0), var(--kq-coral)); -webkit-background-clip: text; background-clip: text; }
 
 /* Pipeline columns: every stage carries its own hue. */
 :root {
   --stage: var(--muted-foreground);
-  --stage-discovered: oklch(0.55 0.18 265);
-  --stage-active-ready: oklch(0.56 0.14 185);
+  --stage-discovered: oklch(0.45 0.08 263);
+  --stage-active-ready: oklch(0.55 0.19 292);
   --stage-pitched: oklch(0.68 0.17 80);
-  --stage-viewed: oklch(0.62 0.2 25);
+  --stage-viewed: oklch(0.67 0.18 25);
   --stage-won: oklch(0.55 0.16 150);
 }
 [data-stage="discovered"] { --stage: var(--stage-discovered); }
@@ -274,7 +273,7 @@
 [data-stage="won"] { --stage: var(--stage-won); }
 .stage-col {
   position: relative;
-  background: color-mix(in oklab, var(--stage) 17%, var(--card));
+  background: color-mix(in oklab, var(--stage) 7%, var(--card));
   border-color: color-mix(in oklab, var(--stage) 42%, var(--border));
 }
 .stage-col::before {
