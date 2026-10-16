@@ -30,7 +30,7 @@ export const Route = createFileRoute("/leads")({
       { title: "Leads Pipeline — Kinetiq" },
       { name: "description", content: "Track Chicago-suburb trade leads from discovery to won, with demo sites and pitch scripts." },
       { property: "og:title", content: "Leads Pipeline — Kinetiq" },
-      { property: "og:description", content: "Lead pipeline and demo site engine for home service trades." },
+      { property: "og:description", content: "Lead pipeline and demo site engine for home service businesses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -71,8 +71,8 @@ function Dashboard() {
       <header className="border-b bg-card/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-4 px-6 py-5">
           <div>
-            <h1 className="font-display text-3xl font-extrabold tracking-tight"><span className="kinetiq-word">Kinetiq</span><span className="text-accent">.</span></h1>
-            <p className="text-sm text-muted-foreground">{leads.length} leads · western suburbs · {hot > 0 && <span className="font-semibold text-hot">{hot} viewing now</span>}</p>
+            <h1 className="font-display text-3xl font-extrabold tracking-tight">Sales Pipeline</h1>
+            <p className="text-sm text-muted-foreground">{leads.length} leads · Chicagoland · {hot > 0 && <span className="font-semibold text-hot">{hot} viewing now</span>}</p>
           </div>
           <AddLeadDialog onAdded={() => qc.invalidateQueries({ queryKey: leadsQuery.queryKey })} />
         </div>
@@ -82,7 +82,7 @@ function Dashboard() {
             <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search business or owner" className="pl-8" />
           </div>
           <Select value={trade} onValueChange={setTrade}><SelectTrigger className="w-40"><SelectValue /></SelectTrigger>
-            <SelectContent><SelectItem value="all">All trades</SelectItem>{TRADES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
+            <SelectContent><SelectItem value="all">All businesses</SelectItem>{TRADES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent></Select>
           <Select value={city} onValueChange={setCity}><SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
             <SelectContent><SelectItem value="all">All areas</SelectItem>{REGION_NAMES.map((r) => (<SelectGroup key={r}><SelectLabel>{r}</SelectLabel><SelectItem value={`region:${r}`}>All {r}</SelectItem>{REGIONS[r].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectGroup>))}</SelectContent></Select>
           <div className="ml-auto flex rounded-md border p-0.5">

@@ -14,7 +14,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-[1500px] gap-10 px-6 py-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-display text-2xl font-extrabold"><span className="kinetiq-word">Kinetiq</span><span className="text-crimson">.</span></p>
-          <p className="mt-3 text-sm opacity-80">Our mission: help the best-reviewed local trades win the customers they already deserve, with websites that turn five-star reputations into booked jobs.</p>
+          <p className="mt-3 text-sm opacity-80">Our mission: help the best-reviewed local businesses win the customers they already deserve, with websites that turn five-star reputations into booked jobs.</p>
           <div className="mt-5 flex gap-2">
             {SOCIAL.map(({ label, Icon }) => (
               <a key={label} href="#" aria-label={label} className="grid h-9 w-9 place-items-center rounded-full bg-crimson text-crimson-foreground transition hover:brightness-110">
@@ -28,8 +28,9 @@ export function SiteFooter() {
           <ul className="mt-3 space-y-2 text-sm opacity-90">
             <li><Link to="/" className="hover:underline">Home</Link></li>
             <li><Link to="/about" className="hover:underline">About</Link></li>
-            <li><Link to="/leads" className="hover:underline">Leads</Link></li>
-            <li><Link to="/join" className="hover:underline">Join the pilot</Link></li>
+            <li><Link to="/leads" className="hover:underline">Sales Pipeline</Link></li>
+            <li><Link to="/audits" className="hover:underline">Website Audits</Link></li>
+            <li><Link to="/join" className="hover:underline">Join</Link></li>
           </ul>
         </div>
         <div>

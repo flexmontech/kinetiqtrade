@@ -40,3 +40,12 @@ describe("area filter", () => {
     expect(matchesArea("Aurora", "Aurora")).toBe(true);
   });
 });
+
+import { auditFor, auditScore } from "./leads";
+describe("website audit", () => {
+  it("flags a missing email and an unopened demo", () => {
+    const c = auditFor({ rating: 4.8, review_count: 63, email: null, phone: "1", owner_name: "Mike", view_count: 0 });
+    expect(c.filter((x) => !x.ok).map((x) => x.label)).toEqual(["Email on file", "Opened their demo"]);
+    expect(auditScore(c)).toBe(67);
+  });
+});

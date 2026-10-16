@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuditsRouteImport } from './routes/audits'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as LeadsRouteImport } from './routes/leads'
 import { Route as PreviewSlugRouteImport } from './routes/preview.$slug'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditsRoute = AuditsRouteImport.update({
+  id: '/audits',
+  path: '/audits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JoinRoute = JoinRouteImport.update({
@@ -44,6 +50,7 @@ const PreviewSlugRoute = PreviewSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/audits': typeof AuditsRoute
   '/join': typeof JoinRoute
   '/leads': typeof LeadsRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/audits': typeof AuditsRoute
   '/join': typeof JoinRoute
   '/leads': typeof LeadsRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -59,21 +67,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/audits': typeof AuditsRoute
   '/join': typeof JoinRoute
   '/leads': typeof LeadsRoute
   '/preview/$slug': typeof PreviewSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/join' | '/leads' | '/preview/$slug'
+  fullPaths: '/' | '/about' | '/audits' | '/join' | '/leads' | '/preview/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/join' | '/leads' | '/preview/$slug'
-  id: '__root__' | '/' | '/about' | '/join' | '/leads' | '/preview/$slug'
+  to: '/' | '/about' | '/audits' | '/join' | '/leads' | '/preview/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/audits'
+    | '/join'
+    | '/leads'
+    | '/preview/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AuditsRoute: typeof AuditsRoute
   JoinRoute: typeof JoinRoute
   LeadsRoute: typeof LeadsRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
@@ -93,6 +110,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/audits': {
+      id: '/audits'
+      path: '/audits'
+      fullPath: '/audits'
+      preLoaderRoute: typeof AuditsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join': {
@@ -122,6 +146,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AuditsRoute: AuditsRoute,
   JoinRoute: JoinRoute,
   LeadsRoute: LeadsRoute,
   PreviewSlugRoute: PreviewSlugRoute,
