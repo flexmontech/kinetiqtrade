@@ -49,3 +49,19 @@ describe("website audit", () => {
     expect(auditScore(c)).toBe(67);
   });
 });
+
+import { reviewReply, chatAnswer } from "./leads";
+describe("AI demo tools", () => {
+  const lead = { business_name: "Acme HVAC", city: "Aurora", owner_name: "Dan Ross", phone: "630-1", trade: "HVAC" };
+  it("thanks happy reviewers and signs with owner first name", () => {
+    const r = reviewReply({ author: "Jane Doe", text: "Great", rating: 5 }, lead);
+    expect(r).toContain("Thank you, Jane");
+    expect(r).toContain("Dan, Acme HVAC");
+  });
+  it("apologizes on low ratings", () => {
+    expect(reviewReply({ author: "Bo", text: "Bad", rating: 2 }, lead)).toContain("sorry");
+  });
+  it("chat confirms free estimates", () => {
+    expect(chatAnswer("Do you offer free estimates?", lead)).toContain("free");
+  });
+});
