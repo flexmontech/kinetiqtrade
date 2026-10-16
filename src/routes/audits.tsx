@@ -80,10 +80,10 @@ function Audits() {
                   </li>
                 ))}
               </ul>
-              {gaps.length > 0 && (
+              {gaps[0] && (
                 <div className="mt-4 rounded-lg bg-muted p-3 text-sm">
                   <p className="font-semibold">Pitch angle</p>
-                  <p className="mt-1 text-muted-foreground">{gaps[0].angle}</p>
+                  <p className="mt-1 text-muted-foreground">{gaps[0]?.angle}</p>
                 </div>
               )}
               <Link to="/preview/$slug" params={{ slug: lead.slug }} search={{ track: 0 }} target="_blank"
