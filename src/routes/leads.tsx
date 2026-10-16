@@ -71,8 +71,8 @@ function Dashboard() {
       <header className="border-b bg-card/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] flex-wrap items-center justify-between gap-4 px-6 py-5">
           <div>
-            <h1 className="font-display text-3xl font-extrabold tracking-tight"><span className="kinetiq-word">Kinetiq</span><span className="text-accent">.</span></h1>
-            <p className="text-sm text-muted-foreground">{leads.length} leads · western suburbs · {hot > 0 && <span className="font-semibold text-hot">{hot} viewing now</span>}</p>
+            <h1 className="font-display text-3xl font-extrabold tracking-tight">Sales Pipeline</h1>
+            <p className="text-sm text-muted-foreground">{leads.length} leads · Chicagoland · {hot > 0 && <span className="font-semibold text-hot">{hot} viewing now</span>}</p>
           </div>
           <AddLeadDialog onAdded={() => qc.invalidateQueries({ queryKey: leadsQuery.queryKey })} />
         </div>
