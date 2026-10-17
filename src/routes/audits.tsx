@@ -21,10 +21,10 @@ const leadsQuery = queryOptions({
 export const Route = createFileRoute("/audits")({
   head: () => ({
     meta: [
-      { title: "Website Audits — Kinetiq" },
+      { title: "Web Readiness — Kinetiq" },
       { name: "description", content: "Readiness checks and pitch angles for every prospect in the Kinetiq workspace." },
-      { property: "og:title", content: "Website Audits — Kinetiq" },
-      { property: "og:description", content: "Readiness checks and pitch angles for local business prospects." },
+      { property: "og:title", content: "Web Readiness — Kinetiq" },
+      { property: "og:description", content: "Web readiness checks and pitch angles for local business prospects." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -48,7 +48,7 @@ function Audits() {
       <header className="border-b bg-card">
         <div className="mx-auto flex max-w-[1500px] flex-wrap items-end justify-between gap-4 px-4 py-6 sm:px-6">
           <div>
-            <h1 className="font-display text-3xl font-extrabold tracking-tight">Website Audits</h1>
+            <h1 className="font-display text-3xl font-extrabold tracking-tight">Web Readiness</h1>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">Readiness checks and pitch angles for each business. Live checks of their current website (speed, mobile, booking) arrive once business scanning is connected.</p>
           </div>
           <div className="relative w-full max-w-xs">

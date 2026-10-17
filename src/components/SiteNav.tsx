@@ -2,9 +2,8 @@ import { Link } from "@tanstack/react-router";
 
 const TABS = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
   { to: "/leads", label: "Sales Pipeline" },
-  { to: "/audits", label: "Website Audits" },
+  { to: "/audits", label: "Web Readiness" },
   { to: "/scanner", label: "Find Prospects" },
 ] as const;
 

@@ -27,9 +27,8 @@ export function SiteFooter() {
           <h3 className="font-display font-bold text-crimson">Sitemap</h3>
           <ul className="mt-3 space-y-2 text-sm opacity-90">
             <li><Link to="/" className="hover:underline">Home</Link></li>
-            <li><Link to="/about" className="hover:underline">About</Link></li>
             <li><Link to="/leads" className="hover:underline">Sales Pipeline</Link></li>
-            <li><Link to="/audits" className="hover:underline">Website Audits</Link></li>
+            <li><Link to="/audits" className="hover:underline">Web Readiness</Link></li>
             <li><Link to="/scanner" className="hover:underline">Find Prospects</Link></li>
             <li><Link to="/join" className="hover:underline">Join</Link></li>
           </ul>
