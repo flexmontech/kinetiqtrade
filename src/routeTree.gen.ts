@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuditsRouteImport } from './routes/audits'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as LeadsRouteImport } from './routes/leads'
+import { Route as ScannerRouteImport } from './routes/scanner'
 import { Route as PreviewSlugRouteImport } from './routes/preview.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const LeadsRoute = LeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScannerRoute = ScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PreviewSlugRoute = PreviewSlugRouteImport.update({
   id: '/preview/$slug',
   path: '/preview/$slug',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/audits': typeof AuditsRoute
   '/join': typeof JoinRoute
   '/leads': typeof LeadsRoute
+  '/scanner': typeof ScannerRoute
   '/preview/$slug': typeof PreviewSlugRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/audits': typeof AuditsRoute
   '/join': typeof JoinRoute
   '/leads': typeof LeadsRoute
+  '/scanner': typeof ScannerRoute
   '/preview/$slug': typeof PreviewSlugRoute
 }
 export interface FileRoutesById {
@@ -70,13 +78,28 @@ export interface FileRoutesById {
   '/audits': typeof AuditsRoute
   '/join': typeof JoinRoute
   '/leads': typeof LeadsRoute
+  '/scanner': typeof ScannerRoute
   '/preview/$slug': typeof PreviewSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/audits' | '/join' | '/leads' | '/preview/$slug'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/audits'
+    | '/join'
+    | '/leads'
+    | '/scanner'
+    | '/preview/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/audits' | '/join' | '/leads' | '/preview/$slug'
+  to:
+    | '/'
+    | '/about'
+    | '/audits'
+    | '/join'
+    | '/leads'
+    | '/scanner'
+    | '/preview/$slug'
   id:
     | '__root__'
     | '/'
@@ -84,6 +107,7 @@ export interface FileRouteTypes {
     | '/audits'
     | '/join'
     | '/leads'
+    | '/scanner'
     | '/preview/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -93,6 +117,7 @@ export interface RootRouteChildren {
   AuditsRoute: typeof AuditsRoute
   JoinRoute: typeof JoinRoute
   LeadsRoute: typeof LeadsRoute
+  ScannerRoute: typeof ScannerRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
 }
 
@@ -133,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeadsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scanner': {
+      id: '/scanner'
+      path: '/scanner'
+      fullPath: '/scanner'
+      preLoaderRoute: typeof ScannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/preview/$slug': {
       id: '/preview/$slug'
       path: '/preview/$slug'
@@ -149,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuditsRoute: AuditsRoute,
   JoinRoute: JoinRoute,
   LeadsRoute: LeadsRoute,
+  ScannerRoute: ScannerRoute,
   PreviewSlugRoute: PreviewSlugRoute,
 }
 export const routeTree = rootRouteImport

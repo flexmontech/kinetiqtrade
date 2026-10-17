@@ -5,6 +5,7 @@ const TABS = [
   { to: "/about", label: "About" },
   { to: "/leads", label: "Sales Pipeline" },
   { to: "/audits", label: "Website Audits" },
+  { to: "/scanner", label: "Find Prospects" },
 ] as const;
 
 const tab = "whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-semibold transition";
