@@ -13,3 +13,4 @@
 - Demo site views are counted only via the record_lead_view database function, called client-side; dashboard previews pass ?track=0 so the owner's own views don't count.
 - Phase 1 has no login: the leads table is open to anyone with the app. Add auth before sharing the dashboard URL.
 - Demo photography is bundled locally and selected by trade in the preview route; demo-scoped semantic tokens keep presentation changes isolated from the CRM.
+- Prospect scanning lives in src/lib/scanner.ts and returns deterministic generated listings; keep every listing field produced there so the live listings provider can be swapped in behind scanProspects without touching the UI.
