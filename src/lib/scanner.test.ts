@@ -1,8 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { prospectScore } from "@/lib/leads";
-import { isKnownProspect, prospectToLead, scanProspects, type Prospect } from "@/lib/scanner";
+import { isKnownProspect, prospectToLead, scanProspects, type ScanInput } from "@/lib/scanner";
 
-const base = { trade: "HVAC", area: "Aurora", minRating: 0, minReviews: 0, onlyNoWebsite: false };
+const base: ScanInput = { trade: "HVAC", area: "Aurora", minRating: 0, minReviews: 0, onlyNoWebsite: false };
+
+function firstProspect(input: ScanInput) {
+  const [p] = scanProspects(input);
+  if (!p) throw new Error(`no prospects returned for ${JSON.stringify(input)}`);
+  return p;
+}
 
 describe("scanProspects", () => {
   it("returns only the requested business type and suburb", () => {
@@ -30,6 +36,7 @@ describe("scanProspects", () => {
 
   it("never returns the same business twice in one search", () => {
     const names = scanProspects({ ...base, area: "all", limit: 40 }).map((p) => p.business_name.toLowerCase());
+    expect(names.length).toBeGreaterThan(1);
     expect(new Set(names).size).toBe(names.length);
   });
 });
@@ -46,7 +53,7 @@ describe("prospectScore", () => {
 
 describe("prospectToLead", () => {
   it("maps a prospect onto a pipeline row with a unique slug", () => {
-    const prospect = scanProspects(base)[0];
+    const prospect = firstProspect(base);
     const row = prospectToLead(prospect);
     expect(row.business_name).toBe(prospect.business_name);
     expect(row.city).toBe(prospect.city);
@@ -56,24 +63,9 @@ describe("prospectToLead", () => {
   });
 
   it("flags businesses already in the pipeline", () => {
-    const prospect = scanProspects(base)[0];
+    const prospect = firstProspect(base);
     const known = new Set([prospect.business_name.toLowerCase()]);
     expect(isKnownProspect(prospect, known)).toBe(true);
     expect(isKnownProspect(prospect, new Set<string>())).toBe(false);
   });
 });
-
-// Guard: the row shape must stay compatible with the leads table.
-const _shape: Prospect = scanProspects(base)[0];
-void ((_shape: Prospect) => ({
-  slug: _shape.id,
-  business_name: _shape.business_name,
-  owner_name: _shape.owner_name,
-  phone: _shape.phone,
-  email: _shape.email,
-  trade: _shape.trade,
-  city: _shape.city,
-  rating: _shape.rating,
-  review_count: _shape.review_count,
-  reviews: _shape.reviews,
-}))(_shape);

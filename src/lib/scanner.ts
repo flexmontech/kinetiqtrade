@@ -6,6 +6,7 @@ import {
   matchesArea,
   prospectScore,
   slugify,
+  type Region,
   type Review,
 } from "@/lib/leads";
 
@@ -45,11 +46,15 @@ export type ScanInput = {
   limit?: number;
 };
 
-const NAME_POOLS: Record<string, { prefix: string[]; core: string[] }> = {
-  HVAC: {
-    prefix: ["Northline", "Prairie", "Midway", "Lakeshore", "Cedar Ridge", "Ironwood", "Blue Heron", "Kettle Creek", "Fox Valley", "Grandview", "Blackhawk", "Sunset"],
-    core: ["Heating & Air", "HVAC", "Climate Control", "Comfort Systems", "Air Conditioning", "Boiler & Furnace"],
-  },
+type Pool = { prefix: string[]; core: string[] };
+
+const HVAC_POOL: Pool = {
+  prefix: ["Northline", "Prairie", "Midway", "Lakeshore", "Cedar Ridge", "Ironwood", "Blue Heron", "Kettle Creek", "Fox Valley", "Grandview", "Blackhawk", "Sunset"],
+  core: ["Heating & Air", "HVAC", "Climate Control", "Comfort Systems", "Air Conditioning", "Boiler & Furnace"],
+};
+
+const NAME_POOLS: Record<string, Pool> = {
+  HVAC: HVAC_POOL,
   Roofing: {
     prefix: ["Summit", "Ironclad", "Stormwatch", "Copper Ridge", "Northstar", "Keystone", "Timberline", "Granite", "Beacon", "Ridgecrest", "Lakeside", "Harbor"],
     core: ["Roofing", "Roofing & Exteriors", "Roof & Gutter", "Roof Works"],
@@ -77,13 +82,15 @@ const SUFFIXES = ["Co.", "LLC", "Services", "Group", "Pros", "& Sons"];
 const FIRST = ["Marcus", "Dana", "Luis", "Priya", "Tom", "Alicia", "Ray", "Nina", "Joe", "Kelly", "Omar", "Beth", "Craig", "Sam", "Rosa", "Neil", "Hana", "Vince", "Grace", "Ivan"];
 const LAST = ["Delgado", "Whitfield", "Okafor", "Kowalski", "Reyes", "Brennan", "Sato", "Novak", "Ahmed", "Sullivan", "Marchetti", "Alvarez", "Hoffman", "Byrne", "Kaur", "Fischer", "Malone", "Petrov", "Doyle", "Bennett"];
 
+const HVAC_QUOTES = [
+  "Technician arrived within two hours and had the heat running again that night.",
+  "They replaced our furnace in a single day and left the basement spotless.",
+  "Honest quote, no upsell — told us we only needed a capacitor.",
+  "Our energy bill dropped the first month after the new system.",
+];
+
 const QUOTES: Record<string, string[]> = {
-  HVAC: [
-    "Technician arrived within two hours and had the heat running again that night.",
-    "They replaced our furnace in a single day and left the basement spotless.",
-    "Honest quote, no upsell — told us we only needed a capacitor.",
-    "Our energy bill dropped the first month after the new system.",
-  ],
+  HVAC: HVAC_QUOTES,
   Roofing: [
     "Came out the same afternoon after the storm and tarped it for free.",
     "New roof in one day, and they handled the insurance paperwork.",
@@ -143,10 +150,10 @@ function makeRandom(seed: number) {
 }
 
 function pick<T>(list: readonly T[], r: () => number) {
-  return list[Math.floor(r() * list.length) % list.length];
+  return list[Math.floor(r() * list.length) % list.length] as T;
 }
 
-function regionFor(city: string) {
+function regionFor(city: string): Region {
   return REGION_NAMES.find((r) => (REGIONS[r] as readonly string[]).includes(city)) ?? "West";
 }
 
@@ -160,7 +167,7 @@ function gapsFor(p: Pick<Prospect, "rating" | "review_count" | "has_website">) {
 }
 
 function buildProspect(trade: string, city: string, index: number): Prospect {
-  const pools = NAME_POOLS[trade] ?? NAME_POOLS.HVAC;
+  const pools = NAME_POOLS[trade] ?? HVAC_POOL;
   const r = makeRandom(seedOf(`${trade}|${city}|${index}`));
 
   const business_name = `${pick(pools.prefix, r)} ${pick(pools.core, r)} ${pick(SUFFIXES, r)}`;
@@ -169,13 +176,13 @@ function buildProspect(trade: string, city: string, index: number): Prospect {
   const review_count = Math.round(4 + Math.pow(r(), 2) * 210);
   const has_website = r() > 0.55;
 
-  const quotePool = QUOTES[trade] ?? QUOTES.HVAC;
-  const quote = quotePool[Math.floor(r() * quotePool.length) % quotePool.length];
-  const author = `${pick(FIRST, r)} ${pick(LAST, r)[0]}.`;
+  const quotePool = QUOTES[trade] ?? HVAC_QUOTES;
+  const quote = pick(quotePool, r);
+  const author = `${pick(FIRST, r)} ${pick(LAST, r).charAt(0)}.`;
 
   const slug = slugify(business_name);
   const email = `info@${slug.replace(/[^a-z0-9]/g, "")}.com`;
-  const phone = `(${AREA_CODES[regionFor(city)]}) 555-01${String(Math.floor(r() * 90) + 10)}`;
+  const phone = `(${AREA_CODES[regionFor(city)] ?? "630"}) 555-01${String(Math.floor(r() * 90) + 10)}`;
 
   const base = { rating, review_count, has_website };
   return {
@@ -198,7 +205,11 @@ function buildProspect(trade: string, city: string, index: number): Prospect {
 
 export function scanProspects(input: ScanInput): Prospect[] {
   const { trade, area, minRating, minReviews, onlyNoWebsite, limit = 12 } = input;
-  const cities = area === "all" ? CITIES : area.startsWith("region:") ? [...REGIONS[area.slice(7) as keyof typeof REGIONS]] : [area];
+
+  let cities: readonly string[];
+  if (area === "all") cities = CITIES;
+  else if (area.startsWith("region:")) cities = REGIONS[area.slice(7) as Region] ?? [];
+  else cities = [area];
 
   const out: Prospect[] = [];
   const seen = new Set<string>();
@@ -206,10 +217,11 @@ export function scanProspects(input: ScanInput): Prospect[] {
     if (!matchesArea(city, area)) continue;
     for (let i = 0; i < 4; i++) {
       const p = buildProspect(trade, city, i);
-      if (seen.has(p.business_name.toLowerCase())) continue;
+      const key = p.business_name.toLowerCase();
+      if (seen.has(key)) continue;
       if (p.rating < minRating || p.review_count < minReviews) continue;
       if (onlyNoWebsite && p.has_website) continue;
-      seen.add(p.business_name.toLowerCase());
+      seen.add(key);
       out.push(p);
     }
   }
