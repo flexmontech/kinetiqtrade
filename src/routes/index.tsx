@@ -26,6 +26,12 @@ const PILLARS = [
 
 const STEPS = ["Discover high-trust businesses", "Build their demo site instantly", "Pitch by email, text or call", "See the moment they open it", "Win the client"];
 
+const ABOUT_POINTS = [
+  { t: "Identify", d: "We identify premier, top-rated local service businesses across Greater Chicagoland whose customer trust outpaces their digital footprint." },
+  { t: "Architect", d: "Each business receives an interactive, high-converting web application showcasing their verified credentials, real customer reviews, and automated AI client capture." },
+  { t: "Deploy", d: "Business owners test-drive their live custom platform directly on mobile and deploy to production on their own domain." },
+];
+
 const AI_TOOLS = [
   { Icon: MessageCircle, title: "AI website chat", text: "Answers customer questions and captures job requests 24/7 — even at 2 a.m. when the furnace dies." },
   { Icon: Reply, title: "AI review replies", text: "Writes warm, on-brand replies to every Google review so the business looks responsive and trusted." },
@@ -58,7 +64,21 @@ function Landing() {
           ))}
         </section>
 
-        <section className="mt-16 grid gap-4 rounded-2xl bg-foreground p-8 text-background md:grid-cols-3">
+        <section className="py-16">
+          <h2 className="text-center font-display text-4xl font-extrabold">Websites that win local trust.</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-muted-foreground">Great local businesses lose calls every day due to no web presence, no visibility and little or no product presence. Kinetiq turns their Google reputation into a site that converts.</p>
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {ABOUT_POINTS.map((p, i) => (
+              <div key={p.t} className="rounded-xl border bg-card/85 p-6 backdrop-blur-md">
+                <span className="font-display text-sm font-bold text-crimson">0{i + 1}</span>
+                <h3 className="mt-1 font-display text-xl font-bold">{p.t}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{p.d}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-4 grid gap-4 rounded-2xl bg-foreground p-8 text-background md:grid-cols-3">
           <div><p className="flex items-center gap-2 font-display text-4xl font-extrabold"><Star className="h-7 w-7 fill-current text-crimson" />4.5+</p><p className="opacity-80">star businesses with 15+ reviews targeted first</p></div>
           <div><p className="flex items-center gap-2 font-display text-4xl font-extrabold"><MapPinned className="h-7 w-7 text-crimson" />{REGION_NAMES.length}</p><p className="opacity-80">Chicagoland regions covered</p></div>
           <div><p className="flex items-center gap-2 font-display text-4xl font-extrabold"><Zap className="h-7 w-7 text-crimson" />1 click</p><p className="opacity-80">from lead to live demo site</p></div>
