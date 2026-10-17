@@ -5,6 +5,7 @@ import {
   isHighTrust,
   matchesArea,
   prospectScore,
+  slugify,
   type Review,
 } from "@/lib/leads";
 
