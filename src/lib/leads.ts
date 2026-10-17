@@ -51,6 +51,14 @@ export function opportunityScore(rating: number, reviews: number) {
   return Math.round(ratingPart + reviewPart + bonus);
 }
 
+/**
+ * Prospect priority: reputation proof plus the size of the gap.
+ * A business with no website is the easiest yes, so it gets a boost.
+ */
+export function prospectScore(rating: number, reviews: number, hasWebsite: boolean) {
+  return Math.min(100, opportunityScore(rating, reviews) + (hasWebsite ? 0 : 15));
+}
+
 export function viewedRecently(lastViewedAt: string | null, now = Date.now(), windowMin = 15) {
   if (!lastViewedAt) return false;
   return now - new Date(lastViewedAt).getTime() < windowMin * 60_000;
