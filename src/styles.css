@@ -301,42 +301,42 @@ footer .kinetiq-word { background: var(--kq-gradient); -webkit-background-clip: 
   background: var(--stage);
 }
 
-/* Jewel workspace: vivid action accents on rich emerald surfaces. */
+/* Jewel workspace, light: fresh mint surfaces with emerald, amber and coral accents. */
 :root, .dark {
-  --kq-navy: oklch(0.22 0.045 168);
-  --kq-coral: oklch(0.72 0.18 28);
-  --kq-purple: oklch(0.74 0.17 302);
-  --kq-grey: oklch(0.19 0.035 168);
+  --kq-navy: oklch(0.27 0.06 168);
+  --kq-coral: oklch(0.64 0.2 28);
+  --kq-purple: oklch(0.58 0.2 302);
+  --kq-grey: oklch(0.965 0.03 160);
   --background: var(--kq-grey);
-  --foreground: oklch(0.97 0.012 155);
-  --card: oklch(0.26 0.048 168);
+  --foreground: oklch(0.24 0.05 168);
+  --card: oklch(0.99 0.012 150);
   --card-foreground: var(--foreground);
-  --popover: oklch(0.28 0.046 168);
+  --popover: oklch(0.99 0.012 150);
   --popover-foreground: var(--foreground);
-  --primary: oklch(0.88 0.18 92);
-  --primary-foreground: oklch(0.2 0.045 168);
-  --secondary: oklch(0.33 0.06 168);
+  --primary: oklch(0.5 0.14 162);
+  --primary-foreground: oklch(0.99 0.01 150);
+  --secondary: oklch(0.92 0.05 160);
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.3 0.035 168);
-  --muted-foreground: oklch(0.77 0.028 158);
-  --accent: oklch(0.78 0.15 165);
-  --accent-foreground: var(--primary-foreground);
+  --muted: oklch(0.93 0.035 160);
+  --muted-foreground: oklch(0.44 0.04 168);
+  --accent: oklch(0.62 0.17 62);
+  --accent-foreground: oklch(0.2 0.04 60);
   --hot: var(--kq-coral);
-  --hot-foreground: var(--primary-foreground);
-  --trust: oklch(0.8 0.15 160);
-  --border: oklch(0.4 0.044 168);
-  --input: oklch(0.43 0.047 168);
+  --hot-foreground: oklch(0.99 0 0);
+  --trust: oklch(0.52 0.14 160);
+  --border: oklch(0.86 0.045 160);
+  --input: oklch(0.84 0.05 160);
   --ring: var(--primary);
   --crimson: var(--kq-coral);
-  --crimson-foreground: var(--primary-foreground);
-  --kq-gradient: linear-gradient(90deg, var(--accent), var(--primary), var(--crimson));
-  --stage-discovered: oklch(0.75 0.13 240);
+  --crimson-foreground: oklch(0.99 0 0);
+  --kq-gradient: linear-gradient(90deg, var(--primary), var(--accent), var(--crimson));
+  --stage-discovered: oklch(0.52 0.15 245);
   --stage-active-ready: var(--kq-purple);
-  --stage-pitched: var(--primary);
+  --stage-pitched: oklch(0.62 0.16 70);
   --stage-viewed: var(--crimson);
-  --stage-won: oklch(0.79 0.18 150);
-  --home-scrim: linear-gradient(90deg, oklch(0.16 0.025 168 / 94%), oklch(0.16 0.025 168 / 68%) 42%, oklch(0.16 0.025 168 / 4%) 76%);
-  --home-shadow: 0 18px 50px oklch(0.12 0.025 168 / 25%);
+  --stage-won: oklch(0.52 0.15 150);
+  --home-scrim: linear-gradient(90deg, oklch(0.97 0.03 160 / 95%), oklch(0.97 0.03 160 / 78%) 42%, oklch(0.97 0.03 160 / 0%) 74%);
+  --home-shadow: 0 18px 50px oklch(0.3 0.06 168 / 18%);
 }
 .demo-site {
   --primary: var(--brand-ink);
@@ -350,7 +350,7 @@ footer .kinetiq-word { background: var(--kq-gradient); -webkit-background-clip: 
 }
 body { font-family: var(--font-body); letter-spacing: 0; }
 .workspace-nav { background: var(--background); }
-.workspace-footer { background: var(--kq-navy); color: var(--foreground); }
+.workspace-footer { background: var(--kq-navy); color: oklch(0.97 0.02 155); --border: oklch(0.4 0.05 168); }
 .home-hero { min-height: 590px; isolation: isolate; }
 .home-hero::after { content: ""; position: absolute; inset: 0; background: var(--home-scrim); z-index: -1; }
 .home-hero img { z-index: -2; object-position: center; }
@@ -361,6 +361,6 @@ body { font-family: var(--font-body); letter-spacing: 0; }
 @media (max-width: 767px) {
   .home-hero { min-height: 580px; }
   .home-hero img { object-position: 68% center; }
-  .home-hero::after { background: linear-gradient(90deg, oklch(0.16 0.025 168 / 93%), oklch(0.16 0.025 168 / 55%)); }
+  .home-hero::after { background: linear-gradient(90deg, oklch(0.97 0.03 160 / 94%), oklch(0.97 0.03 160 / 70%)); }
 }
 @media (prefers-reduced-motion: reduce) { .home-hero-copy { animation: none; } }
