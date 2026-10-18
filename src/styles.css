@@ -255,7 +255,7 @@
   background-clip: text;
   color: transparent;
 }
-footer .kinetiq-word { background: linear-gradient(90deg, oklch(1 0 0), var(--kq-coral)); -webkit-background-clip: text; background-clip: text; }
+footer .kinetiq-word { background: var(--kq-gradient); -webkit-background-clip: text; background-clip: text; }
 
 /* Pipeline columns: every stage carries its own hue. */
 :root {
@@ -300,3 +300,67 @@ footer .kinetiq-word { background: linear-gradient(90deg, oklch(1 0 0), var(--kq
   border-radius: 9999px;
   background: var(--stage);
 }
+
+/* Jewel workspace: vivid action accents on rich emerald surfaces. */
+:root, .dark {
+  --kq-navy: oklch(0.22 0.045 168);
+  --kq-coral: oklch(0.72 0.18 28);
+  --kq-purple: oklch(0.74 0.17 302);
+  --kq-grey: oklch(0.19 0.035 168);
+  --background: var(--kq-grey);
+  --foreground: oklch(0.97 0.012 155);
+  --card: oklch(0.26 0.048 168);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.28 0.046 168);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.88 0.18 92);
+  --primary-foreground: oklch(0.2 0.045 168);
+  --secondary: oklch(0.33 0.06 168);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.3 0.035 168);
+  --muted-foreground: oklch(0.77 0.028 158);
+  --accent: oklch(0.78 0.15 165);
+  --accent-foreground: var(--primary-foreground);
+  --hot: var(--kq-coral);
+  --hot-foreground: var(--primary-foreground);
+  --trust: oklch(0.8 0.15 160);
+  --border: oklch(0.4 0.044 168);
+  --input: oklch(0.43 0.047 168);
+  --ring: var(--primary);
+  --crimson: var(--kq-coral);
+  --crimson-foreground: var(--primary-foreground);
+  --kq-gradient: linear-gradient(90deg, var(--accent), var(--primary), var(--crimson));
+  --stage-discovered: oklch(0.75 0.13 240);
+  --stage-active-ready: var(--kq-purple);
+  --stage-pitched: var(--primary);
+  --stage-viewed: var(--crimson);
+  --stage-won: oklch(0.79 0.18 150);
+  --home-scrim: linear-gradient(90deg, oklch(0.16 0.025 168 / 94%), oklch(0.16 0.025 168 / 68%) 42%, oklch(0.16 0.025 168 / 4%) 76%);
+  --home-shadow: 0 18px 50px oklch(0.12 0.025 168 / 25%);
+}
+.demo-site {
+  --primary: var(--brand-ink);
+  --primary-foreground: var(--brand-contrast);
+  --secondary: var(--brand-soft);
+  --secondary-foreground: var(--brand-ink);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --accent: var(--brand);
+  --accent-foreground: var(--brand-contrast);
+}
+body { font-family: var(--font-body); letter-spacing: 0; }
+.workspace-nav { background: var(--background); }
+.workspace-footer { background: var(--kq-navy); color: var(--foreground); }
+.home-hero { min-height: 590px; isolation: isolate; }
+.home-hero::after { content: ""; position: absolute; inset: 0; background: var(--home-scrim); z-index: -1; }
+.home-hero img { z-index: -2; object-position: center; }
+.home-hero-copy { animation: demo-enter 700ms ease-out both; }
+.home-photo { box-shadow: var(--home-shadow); }
+.home-chat { background: var(--background); box-shadow: var(--home-shadow); }
+@media (min-width: 768px) and (max-height: 800px) { .home-hero { min-height: 490px; } }
+@media (max-width: 767px) {
+  .home-hero { min-height: 580px; }
+  .home-hero img { object-position: 68% center; }
+  .home-hero::after { background: linear-gradient(90deg, oklch(0.16 0.025 168 / 93%), oklch(0.16 0.025 168 / 55%)); }
+}
+@media (prefers-reduced-motion: reduce) { .home-hero-copy { animation: none; } }
