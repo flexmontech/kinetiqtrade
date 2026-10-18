@@ -11,9 +11,9 @@ const tab = "whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-semibold tran
 
 export function SiteNav() {
   return (
-    <nav aria-label="Main" className="border-b bg-card">
+    <nav aria-label="Main" className="workspace-nav border-b bg-card">
       <div className="mx-auto flex max-w-[1500px] items-center gap-4 px-4 py-3 sm:px-6">
-        <Link to="/" className="shrink-0 font-display text-xl font-extrabold tracking-tight">
+        <Link to="/" className="shrink-0 font-display text-xl font-extrabold">
           <span className="kinetiq-word">Kinetiq</span><span className="text-crimson">.</span>
         </Link>
         <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">

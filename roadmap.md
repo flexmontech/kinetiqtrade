@@ -1,4 +1,6 @@
 # Kinetiq roadmap
+- [x] Apply the approved emerald/amber theme and photographic Home refresh; verify navigation and tools.
+- [x] Lighten the emerald theme while keeping it vibrant.
 - [x] Demo visual refresh (photography, polished layouts, verified).
 - [x] Full footer (social icons, mission, sitemap, contact, disclaimers) on Home, Sales Pipeline, Web Readiness, Find Prospects, Join.
 - [x] Expand suburbs to West, Northwest, South, Southwest, East regions; filter by region or suburb.
