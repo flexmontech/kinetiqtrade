@@ -17,6 +17,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         brand: "bg-brand text-brand-contrast shadow-sm hover:bg-brand/90",
+        coral: "bg-crimson text-crimson-foreground shadow-sm hover:bg-crimson/90",
         heroOutline: "border border-photo-foreground/50 bg-photo-shade/20 text-photo-foreground hover:bg-photo-foreground/15",
       },
       size: {

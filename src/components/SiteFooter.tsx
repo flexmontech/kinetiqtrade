@@ -9,7 +9,7 @@ const SOCIAL = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 bg-foreground text-background">
+    <footer className="workspace-footer mt-16">
       <div className="h-1 bg-crimson" />
       <div className="mx-auto grid max-w-[1500px] gap-10 px-6 py-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
@@ -48,7 +48,7 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-background/15">
+      <div className="border-t border-border">
         <div className="mx-auto max-w-[1500px] space-y-2 px-6 py-5 text-xs opacity-70">
           <p>Disclaimer: Demo websites are samples created for prospective clients and are not affiliated with or endorsed by the businesses shown until claimed. Ratings and reviews are sourced from public listings. Pilot program — features may change.</p>
           <p>© {new Date().getFullYear()} Kinetiq. All rights reserved. · Privacy · Terms</p>
