@@ -403,6 +403,27 @@ body { font-family: var(--font-body); letter-spacing: 0; }
 .home-hero::after { content: ""; position: absolute; inset: 0; background: var(--home-scrim); z-index: -1; }
 .home-hero img { z-index: -2; object-position: center; }
 .home-hero-copy { animation: demo-enter 700ms ease-out both; }
+/* Raised, embossed depth for the hero's left-side wording. */
+.raise-text {
+  text-shadow:
+    0 1px 0 oklch(1 0 0 / 92%),
+    0 2px 0 oklch(0.96 0.02 160 / 85%),
+    0 5px 7px oklch(0.28 0.05 168 / 22%),
+    0 12px 26px oklch(0.28 0.05 168 / 16%);
+}
+.raise-text-soft {
+  text-shadow:
+    0 1px 0 oklch(1 0 0 / 85%),
+    0 3px 8px oklch(0.28 0.05 168 / 14%);
+}
+.raise-chip {
+  border: 1px solid oklch(0.9 0.03 160);
+  background: linear-gradient(180deg, oklch(1 0 0 / 96%), oklch(0.97 0.02 160 / 88%));
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 90%),
+    0 3px 6px oklch(0.28 0.05 168 / 12%),
+    0 10px 20px oklch(0.28 0.05 168 / 10%);
+}
 .home-photo { box-shadow: var(--home-shadow); }
 .home-chat { background: var(--background); box-shadow: var(--home-shadow); }
 @media (min-width: 768px) and (max-height: 800px) { .home-hero { min-height: 490px; } }

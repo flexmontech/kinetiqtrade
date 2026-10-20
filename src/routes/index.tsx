@@ -48,15 +48,15 @@ function Landing() {
         <section className="home-hero relative flex items-center overflow-hidden">
           <img src={studioPhoto} alt="A contemporary creative studio with websites displayed across desktop, laptop and mobile screens" width={1920} height={1088} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover" />
           <div className="home-hero-copy mx-auto w-full max-w-[1200px] px-6 py-16">
-            <p className="flex items-center gap-2 text-sm font-semibold text-primary"><span className="h-2 w-2 rounded-full bg-crimson" />Chicagoland businesses. Bigger possibilities.</p>
-            <h1 className="mt-5 max-w-xl font-display text-5xl font-extrabold leading-[1.06] md:text-7xl">Kinetiq<span className="text-primary">.</span></h1>
-            <p className="mt-5 max-w-lg font-display text-3xl font-bold leading-tight md:text-4xl">Great businesses deserve great websites — and more customers.</p>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">Beautiful web apps. Smarter lead generation. AI tools that turn interest into your next client.</p>
+            <p className="raise-chip inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-primary"><span className="h-2 w-2 rounded-full bg-crimson" />Chicagoland businesses. Bigger possibilities.</p>
+            <h1 className="raise-text mt-5 max-w-xl font-display text-5xl font-extrabold leading-[1.06] md:text-7xl">Kinetiq<span className="text-primary">.</span></h1>
+            <p className="raise-text mt-5 max-w-lg font-display text-3xl font-bold leading-tight md:text-4xl">Great businesses deserve great websites — and more customers.</p>
+            <p className="raise-text-soft mt-5 max-w-md text-base leading-relaxed text-foreground/80 md:text-lg">Beautiful web apps. Smarter lead generation. AI tools that turn interest into your next client.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="h-12"><Link to="/join">Join <ArrowRight /></Link></Button>
-              <Button asChild size="lg" variant="outline" className="h-12 bg-card"><Link to="/leads">See live leads <ArrowRight /></Link></Button>
+              <Button asChild size="lg" className="h-12 shadow-[0_2px_0_oklch(1_0_0/35%)_inset,0_6px_14px_oklch(0.28_0.05_168/25%)]"><Link to="/join">Join <ArrowRight /></Link></Button>
+              <Button asChild size="lg" variant="outline" className="raise-chip h-12"><Link to="/leads">See live leads <ArrowRight /></Link></Button>
             </div>
-            <p className="mt-6 flex items-center gap-2 text-sm text-muted-foreground"><MapPinned className="h-4 w-4 text-accent" />Now piloting across Greater Chicagoland</p>
+            <p className="raise-chip mt-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm text-foreground/80"><MapPinned className="h-4 w-4 text-accent" />Now piloting across Greater Chicagoland</p>
           </div>
         </section>
 
