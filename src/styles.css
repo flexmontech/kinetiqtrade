@@ -350,6 +350,43 @@ footer .kinetiq-word { background: var(--kq-gradient); -webkit-background-clip: 
 }
 body { font-family: var(--font-body); letter-spacing: 0; }
 .workspace-nav { background: var(--background); }
+
+/* Nav tabs: each tab carries its own pastel hue, shown on selection and hover. */
+:root {
+  --tab-home: oklch(0.9 0.055 18);
+  --tab-home-ink: oklch(0.44 0.14 22);
+  --tab-leads: oklch(0.9 0.055 292);
+  --tab-leads-ink: oklch(0.44 0.14 292);
+  --tab-audits: oklch(0.91 0.06 78);
+  --tab-audits-ink: oklch(0.48 0.11 65);
+  --tab-scanner: oklch(0.89 0.055 235);
+  --tab-scanner-ink: oklch(0.44 0.12 248);
+}
+.tab-link { color: var(--muted-foreground); }
+.tab-link::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 0.45rem;
+  border-radius: 9999px;
+  background: var(--tab-c);
+  opacity: 0.5;
+  transition: opacity 150ms ease;
+}
+.tab-link[data-status="active"] {
+  background: var(--tab-c);
+  color: var(--tab-ink);
+}
+.tab-link[data-status="active"]::before { opacity: 1; }
+.tab-link:not([data-status="active"]):hover {
+  background: color-mix(in oklab, var(--tab-c) 40%, white);
+  color: var(--tab-ink);
+}
+.tab-link:not([data-status="active"]):hover::before { opacity: 0.85; }
+@media (prefers-reduced-motion: reduce) {
+  .tab-link::before { transition: none; }
+}
 .workspace-footer { background: var(--kq-navy); color: oklch(0.97 0.02 155); --border: oklch(0.4 0.05 168); }
 .home-hero { min-height: 590px; isolation: isolate; }
 .home-hero::after { content: ""; position: absolute; inset: 0; background: var(--home-scrim); z-index: -1; }
