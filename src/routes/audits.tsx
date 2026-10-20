@@ -43,7 +43,7 @@ function Audits() {
     .sort((a, b) => opportunityScore(b.lead.rating, b.lead.review_count) - opportunityScore(a.lead.rating, a.lead.review_count)), [leads, q]);
 
   return (
-    <div className="kinetiq-bg min-h-screen">
+    <div className="kinetiq-bg page-audits min-h-screen">
       <SiteNav />
       <header className="border-b bg-card">
         <div className="mx-auto flex max-w-[1500px] flex-wrap items-end justify-between gap-4 px-4 py-6 sm:px-6">
