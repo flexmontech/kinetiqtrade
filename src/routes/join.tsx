@@ -23,7 +23,7 @@ function Join() {
   const [sent, setSent] = useState(false);
   function submit(e: FormEvent) { e.preventDefault(); setSent(true); }
   return (
-    <div className="kinetiq-bg min-h-screen">
+    <div className="kinetiq-bg page-join min-h-screen">
       <SiteNav />
       <main className="mx-auto max-w-md px-6 py-14">
         <h1 className="font-display text-4xl font-extrabold tracking-tight">Join</h1>

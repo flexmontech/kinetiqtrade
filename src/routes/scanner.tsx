@@ -68,7 +68,7 @@ function Scanner() {
   }
 
   return (
-    <div className="kinetiq-bg min-h-screen">
+    <div className="kinetiq-bg page-scanner min-h-screen">
       <SiteNav />
       <header className="border-b bg-card/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1500px] flex-wrap items-end justify-between gap-4 px-6 py-5">

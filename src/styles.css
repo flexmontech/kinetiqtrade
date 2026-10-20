@@ -248,6 +248,17 @@
   --kq-gradient: linear-gradient(90deg, var(--kq-navy), var(--kq-purple), var(--kq-coral));
 }
 .kinetiq-bg { background: var(--background); }
+/* Each page carries its own pastel canvas. */
+:root {
+  --page-leads: oklch(0.955 0.035 292);
+  --page-audits: oklch(0.96 0.04 78);
+  --page-scanner: oklch(0.95 0.04 235);
+  --page-join: oklch(0.96 0.035 18);
+}
+.kinetiq-bg.page-leads { background: var(--page-leads); }
+.kinetiq-bg.page-audits { background: var(--page-audits); }
+.kinetiq-bg.page-scanner { background: var(--page-scanner); }
+.kinetiq-bg.page-join { background: var(--page-join); }
 .kinetiq-bg::before { content: ""; display: block; height: 3px; background: var(--kq-gradient); }
 .kinetiq-word {
   background: var(--kq-gradient);
@@ -349,17 +360,17 @@ footer .kinetiq-word { background: var(--kq-gradient); -webkit-background-clip: 
   --accent-foreground: var(--brand-contrast);
 }
 body { font-family: var(--font-body); letter-spacing: 0; }
-.workspace-nav { background: var(--background); }
+.workspace-nav { background: var(--card); }
 
 /* Nav tabs: each tab carries its own pastel hue, shown on selection and hover. */
 :root {
-  --tab-home: oklch(0.9 0.055 18);
-  --tab-home-ink: oklch(0.44 0.14 22);
-  --tab-leads: oklch(0.9 0.055 292);
+  --tab-home: oklch(0.92 0.06 158);
+  --tab-home-ink: oklch(0.4 0.11 160);
+  --tab-leads: oklch(0.92 0.055 292);
   --tab-leads-ink: oklch(0.44 0.14 292);
-  --tab-audits: oklch(0.91 0.06 78);
+  --tab-audits: oklch(0.93 0.06 78);
   --tab-audits-ink: oklch(0.48 0.11 65);
-  --tab-scanner: oklch(0.89 0.055 235);
+  --tab-scanner: oklch(0.91 0.06 235);
   --tab-scanner-ink: oklch(0.44 0.12 248);
 }
 .tab-link { color: var(--muted-foreground); }
