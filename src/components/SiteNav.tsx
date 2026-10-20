@@ -1,13 +1,14 @@
 import { Link } from "@tanstack/react-router";
+import type { CSSProperties } from "react";
 
 const TABS = [
-  { to: "/", label: "Home" },
-  { to: "/leads", label: "Sales Pipeline" },
-  { to: "/audits", label: "Web Readiness" },
-  { to: "/scanner", label: "Find Prospects" },
+  { to: "/", label: "Home", tone: "home" },
+  { to: "/leads", label: "Sales Pipeline", tone: "leads" },
+  { to: "/audits", label: "Web Readiness", tone: "audits" },
+  { to: "/scanner", label: "Find Prospects", tone: "scanner" },
 ] as const;
 
-const tab = "whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-semibold transition";
+const tab = "tab-link whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-semibold transition";
 
 export function SiteNav() {
   return (
@@ -19,9 +20,8 @@ export function SiteNav() {
         <div className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
           {TABS.map((t) => (
             <Link key={t.to} to={t.to} activeOptions={{ exact: true }}
-              activeProps={{ className: "bg-primary text-primary-foreground" }}
-              inactiveProps={{ className: "text-muted-foreground hover:bg-muted hover:text-foreground" }}
-              className={tab}>
+              className={tab}
+              style={{ "--tab-c": `var(--tab-${t.tone})`, "--tab-ink": `var(--tab-${t.tone}-ink)` } as CSSProperties}>
               {t.label}
             </Link>
           ))}
