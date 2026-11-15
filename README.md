@@ -1,4 +1,9 @@
 # KinetiqTrade
+
+**Portfolio division:** Web Design & Development
+
+@Flexmon Intellectual Property © FLEXMON LLC. All rights reserved.
+Proprietary work. Do not copy without prior written permission or signed contract.
 ### Website demos and lead generation for local service businesses
 
 **A FLEXMON LLC product**  
