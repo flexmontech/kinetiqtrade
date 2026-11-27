@@ -21,9 +21,9 @@ const leadsQuery = queryOptions({
 export const Route = createFileRoute("/audits")({
   head: () => ({
     meta: [
-      { title: "Web Readiness — Kinetiq" },
-      { name: "description", content: "Readiness checks and pitch angles for every prospect in the Kinetiq workspace." },
-      { property: "og:title", content: "Web Readiness — Kinetiq" },
+      { title: "Web Readiness — OceanHQ" },
+      { name: "description", content: "Readiness checks and pitch angles for every prospect in the OceanHQ workspace." },
+      { property: "og:title", content: "Web Readiness — OceanHQ" },
       { property: "og:description", content: "Web readiness checks and pitch angles for local business prospects." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

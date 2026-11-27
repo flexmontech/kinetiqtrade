@@ -10,9 +10,9 @@ import partnershipPhoto from "@/assets/kinetiq-partnership.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kinetiq — Websites, Leads & New Clients for Local Businesses" },
-      { name: "description", content: "Kinetiq builds web apps for home service businesses, finds high-trust local leads across Chicagoland, and turns them into clients." },
-      { property: "og:title", content: "Kinetiq — Websites, Leads & New Clients for Local Businesses" },
+      { title: "OceanHQ — Websites, Leads & New Clients for Local Businesses" },
+      { name: "description", content: "OceanHQ builds web apps for home service businesses, finds high-trust local leads across Chicagoland, and turns them into clients." },
+      { property: "og:title", content: "OceanHQ — Websites, Leads & New Clients for Local Businesses" },
       { property: "og:description", content: "Web app creation, lead generation and sales pipelines for Chicagoland home service businesses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -49,7 +49,7 @@ function Landing() {
           <img src={studioPhoto} alt="A contemporary creative studio with websites displayed across desktop, laptop and mobile screens" width={1920} height={1088} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover" />
           <div className="home-hero-copy mx-auto w-full max-w-[1200px] px-6 py-16">
             <p className="raise-chip inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-primary"><span className="h-2 w-2 rounded-full bg-crimson" />Chicagoland businesses. Bigger possibilities.</p>
-            <h1 className="raise-text mt-5 max-w-xl font-display text-5xl font-extrabold leading-[1.06] md:text-7xl">Kinetiq<span className="text-primary">.</span></h1>
+            <h1 className="raise-text mt-5 max-w-xl font-display text-5xl font-extrabold leading-[1.06] md:text-7xl">OceanHQ<span className="text-primary">.</span></h1>
             <p className="raise-text mt-5 max-w-lg font-display text-3xl font-bold leading-tight md:text-4xl">Great businesses deserve great websites — and more customers.</p>
             <p className="raise-text-soft mt-5 max-w-md text-base leading-relaxed text-foreground/80 md:text-lg">Beautiful web apps. Smarter lead generation. AI tools that turn interest into your next client.</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -69,7 +69,7 @@ function Landing() {
         </section>
 
         <section className="mx-auto max-w-[1200px] px-6 py-16">
-          <div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-semibold text-primary">THE KINETIQ ADVANTAGE</p><h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">More presence. More possibility.</h2></div><Button asChild variant="link"><Link to="/scanner">Find your next prospect <ArrowRight /></Link></Button></div>
+          <div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-sm font-semibold text-primary">THE OCEANHQ ADVANTAGE</p><h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">More presence. More possibility.</h2></div><Button asChild variant="link"><Link to="/scanner">Find your next prospect <ArrowRight /></Link></Button></div>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {PILLARS.map(({ Icon, title, text }, i) => (
               <div key={title} className="rounded-lg border bg-card p-7">
@@ -83,7 +83,7 @@ function Landing() {
 
         <section className="border-y bg-card/40">
           <div className="mx-auto grid max-w-[1200px] gap-10 px-6 py-16 lg:grid-cols-2 lg:items-center">
-            <div><p className="text-sm font-semibold text-accent">BUILT AROUND YOUR BUSINESS</p><h2 className="mt-3 font-display text-3xl font-extrabold md:text-4xl">Websites that win local trust.</h2><p className="mt-5 leading-relaxed text-muted-foreground">Great local businesses lose calls every day due to no web presence, no visibility and little or no product presence. Kinetiq turns their Google reputation into a site that converts.</p>
+            <div><p className="text-sm font-semibold text-accent">BUILT AROUND YOUR BUSINESS</p><h2 className="mt-3 font-display text-3xl font-extrabold md:text-4xl">Websites that win local trust.</h2><p className="mt-5 leading-relaxed text-muted-foreground">Great local businesses lose calls every day due to no web presence, no visibility and little or no product presence. OceanHQ turns their Google reputation into a site that converts.</p>
               <div className="mt-7 space-y-5">{ABOUT_POINTS.map((p, i) => <div key={p.t} className="flex gap-4 border-t pt-5"><span className="font-display text-xl font-bold text-primary">0{i + 1}</span><div><h3 className="font-display text-xl font-bold">{p.t}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.d}</p></div></div>)}</div>
             </div>
             <figure className="home-photo overflow-hidden rounded-lg"><img src={partnershipPhoto} alt="Business owners reviewing their online presence together in a vibrant studio" width={1536} height={1024} loading="lazy" className="aspect-[4/5] w-full object-cover sm:aspect-[4/3] lg:aspect-[4/5]" /><figcaption className="flex items-center gap-2 bg-secondary px-5 py-4 text-sm font-semibold"><Sparkles className="h-4 w-4 text-primary" />A stronger digital presence starts with your business.</figcaption></figure>
@@ -99,7 +99,7 @@ function Landing() {
         </section>
 
         <section className="border-y bg-card/50"><div className="mx-auto max-w-[1200px] px-6 py-12"><h2 className="font-display text-3xl font-bold">From prospect to client</h2><ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">{STEPS.map((s, i) => <li key={s} className="border-t border-primary/40 pt-4"><span className="font-display text-2xl font-bold text-primary">0{i + 1}</span><p className="mt-3 text-sm font-semibold">{s}</p></li>)}</ol></div></section>
-        <section className="mx-auto max-w-[1200px] px-6 py-16 text-center"><p className="text-sm font-semibold text-accent">YOUR NEXT CHAPTER</p><h2 className="mt-3 font-display text-3xl font-extrabold md:text-5xl">Ready to grow your client list?</h2><p className="mx-auto mt-4 max-w-xl text-muted-foreground">Web presence. Customer conversations. New opportunities. All with Kinetiq.</p><Button asChild size="lg" className="mt-7 h-12"><Link to="/join">Join <ArrowRight /></Link></Button></section>
+        <section className="mx-auto max-w-[1200px] px-6 py-16 text-center"><p className="text-sm font-semibold text-accent">YOUR NEXT CHAPTER</p><h2 className="mt-3 font-display text-3xl font-extrabold md:text-5xl">Ready to grow your client list?</h2><p className="mx-auto mt-4 max-w-xl text-muted-foreground">Web presence. Customer conversations. New opportunities. All with OceanHQ.</p><Button asChild size="lg" className="mt-7 h-12"><Link to="/join">Join <ArrowRight /></Link></Button></section>
       </main>
       <SiteFooter />
     </div>

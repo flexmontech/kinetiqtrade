@@ -1,4 +1,4 @@
-# Kinetiq roadmap
+# OceanHQ roadmap
 - [x] Apply the approved emerald/amber theme and photographic Home refresh; verify navigation and tools.
 - [x] Lighten the emerald theme while keeping it vibrant.
 - [x] Demo visual refresh (photography, polished layouts, verified).

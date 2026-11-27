@@ -13,7 +13,7 @@ export function SiteFooter() {
       <div className="h-1 bg-crimson" />
       <div className="mx-auto grid max-w-[1500px] gap-10 px-6 py-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-display text-2xl font-extrabold"><span className="kinetiq-word">Kinetiq</span><span className="text-crimson">.</span></p>
+          <p className="font-display text-2xl font-extrabold"><span className="kinetiq-word">OceanHQ</span><span className="text-crimson">.</span></p>
           <p className="mt-3 text-sm opacity-80">Our mission: help the best-reviewed local businesses win the customers they already deserve, with websites that turn five-star reputations into booked jobs.</p>
           <div className="mt-5 flex gap-2">
             {SOCIAL.map(({ label, Icon }) => (
@@ -44,14 +44,14 @@ export function SiteFooter() {
           <ul className="mt-3 space-y-3 text-sm opacity-90">
             <li className="flex gap-2"><MapPin className="h-4 w-4 shrink-0" />546 Main Street, Chicago, IL</li>
             <li className="flex gap-2"><Phone className="h-4 w-4 shrink-0" /><a href="tel:+16305550100" className="hover:underline">(630) 555-0100</a></li>
-            <li className="flex gap-2"><Mail className="h-4 w-4 shrink-0" /><a href="mailto:info@kinetiq.tech" className="hover:underline">info@kinetiq.tech</a></li>
+            <li className="flex gap-2"><Mail className="h-4 w-4 shrink-0" /><a href="mailto:info@oceanhq.tech" className="hover:underline">info@oceanhq.tech</a></li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border">
         <div className="mx-auto max-w-[1500px] space-y-2 px-6 py-5 text-xs opacity-70">
           <p>Disclaimer: Demo websites are samples created for prospective clients and are not affiliated with or endorsed by the businesses shown until claimed. Ratings and reviews are sourced from public listings. Pilot program — features may change.</p>
-          <p>© {new Date().getFullYear()} Kinetiq. All rights reserved. · Privacy · Terms</p>
+          <p>© {new Date().getFullYear()} OceanHQ. All rights reserved. · Privacy · Terms</p>
         </div>
       </div>
     </footer>

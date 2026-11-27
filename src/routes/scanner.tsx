@@ -27,9 +27,9 @@ const namesQuery = queryOptions({
 export const Route = createFileRoute("/scanner")({
   head: () => ({
     meta: [
-      { title: "Find Prospects — Kinetiq" },
-      { name: "description", content: "Search Chicagoland for top-rated local businesses with no website — the highest-converting prospects for a Kinetiq demo site." },
-      { property: "og:title", content: "Find Prospects — Kinetiq" },
+      { title: "Find Prospects — OceanHQ" },
+      { name: "description", content: "Search Chicagoland for top-rated local businesses with no website — the highest-converting prospects for a OceanHQ demo site." },
+      { property: "og:title", content: "Find Prospects — OceanHQ" },
       { property: "og:description", content: "Prospect Chicagoland businesses whose reputation outpaces their web presence." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -27,9 +27,9 @@ const leadsQuery = queryOptions({
 export const Route = createFileRoute("/leads")({
   head: () => ({
     meta: [
-      { title: "Leads Pipeline — Kinetiq" },
+      { title: "Leads Pipeline — OceanHQ" },
       { name: "description", content: "Track Chicago-suburb trade leads from discovery to won, with demo sites and pitch scripts." },
-      { property: "og:title", content: "Leads Pipeline — Kinetiq" },
+      { property: "og:title", content: "Leads Pipeline — OceanHQ" },
       { property: "og:description", content: "Lead pipeline and demo site engine for home service businesses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
